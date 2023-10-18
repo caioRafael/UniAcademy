@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import Annotation from '@/types/Annotation'
+import { ListResponse } from '@/types/ListResponse'
 
 export class AnnotationsService
   implements ResourceService<Annotation, Annotation>
@@ -19,10 +20,10 @@ export class AnnotationsService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<Annotation> {
+  async findAll(token: string): Promise<ListResponse<Annotation>> {
     const response = await this.baseApi.getAll(`/api/anotacoes/`, token)
 
-    return response.data as Annotation
+    return response.data
   }
 
   async findOne(id: string, token: string): Promise<Annotation | null> {

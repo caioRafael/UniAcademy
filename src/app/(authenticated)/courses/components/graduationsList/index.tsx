@@ -2,7 +2,6 @@
 
 import Graduation, { GraduationItem } from '@/types/Graduation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Title } from '@/components/Title'
 import { useEffect, useState } from 'react'
 import {
   courseCategoryQueryService,

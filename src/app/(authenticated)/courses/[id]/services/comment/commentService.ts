@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import { CommentItem } from '@/types/Comment'
+import { ListResponse } from '@/types/ListResponse'
 
 export class CommentService
   implements ResourceService<CommentItem, CommentItem>
@@ -21,10 +22,10 @@ export class CommentService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<CommentItem> {
+  async findAll(token: string): Promise<ListResponse<CommentItem>> {
     const response = await this.baseApi.getAll(`/api/comentarios/`, token)
 
-    return response.data as CommentItem
+    return response.data
   }
 
   async findOne(id: string, token: string): Promise<CommentItem | null> {

@@ -6,7 +6,6 @@ import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
 import { getUser } from '@/lib/auth'
 import { AvatarMenu } from '@/components/AvatarMenu'
 import Profile from '@/types/Profile'
-import { DropdownMenuDemo } from './DropdownMenuDemo/DropdownMenuDemo'
 import { ProfileContainer } from '@/components/ProfileContainer'
 import { BellRing } from 'lucide-react'
 import SideBar from '@/components/SideBar'
@@ -34,11 +33,6 @@ export default async function AppLayout({ children }: AppLayoutProps) {
           placeholder="O que você quer aprender?"
         />
         <div className="flex items-center justify-center gap-8">
-          <div className="text-white">
-            <DropdownMenuDemo>
-              <BellRing />
-            </DropdownMenuDemo>
-          </div>
           <AvatarMenu profile={profile as Profile} />
         </div>
       </header>

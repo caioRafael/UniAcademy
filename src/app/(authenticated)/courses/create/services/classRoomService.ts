@@ -20,11 +20,11 @@ export class ClassRoomService implements ResourceService<ClassRoom, ClassRoom> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<ClassRoom>> {
+  async findAll(): Promise<ListResponse<ClassRoom>> {
     throw new Error('Method not implemented.')
   }
 
-  async findOne(id: string, token: string): Promise<ClassRoom | null> {
+  async findOne(): Promise<ClassRoom | null> {
     throw new Error('Method not implemented.')
   }
 
@@ -32,7 +32,7 @@ export class ClassRoomService implements ResourceService<ClassRoom, ClassRoom> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

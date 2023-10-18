@@ -27,13 +27,12 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
   const [selectedComment, setSelectedComment] = useState<CommentItem | null>(
     null,
   )
-  const { data } = commentQueryService.useFindAll(token)
+  const { data: dataComment } = commentItemQueryService.useFindAll(token)
   const { mutateAsync: deleteComment } = commentQueryService.useDelete(token)
   const { mutateAsync: createComment } =
     commentItemQueryService.useCreate(token)
   const { mutateAsync: updateComment } =
     commentItemQueryService.useUpdate(token)
-  const dataComment = data as Comment
   const initalsName = username?.split(' ') as string[]
 
   const sendComment = async () => {

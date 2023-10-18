@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import Clip from '@/types/Clip'
+import { ListResponse } from '@/types/ListResponse'
 
 export class ClipesService implements ResourceService<Clip, Clip> {
   baseApi: IBaseApi<Clip, Clip>
@@ -17,10 +18,10 @@ export class ClipesService implements ResourceService<Clip, Clip> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<Clip> {
+  async findAll(token: string): Promise<ListResponse<Clip>> {
     const response = await this.baseApi.getAll(`/api/clipes/`, token)
 
-    return response.data as Clip
+    return response.data
   }
 
   async findOne(id: string, token: string): Promise<Clip | null> {

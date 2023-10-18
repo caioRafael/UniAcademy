@@ -83,11 +83,7 @@ export function CreateForumModal({
         onClick={() => setShowModal(false)}
         className="sm:max-w-[50%]"
       >
-        <AppForm
-          onSubmit={async () => {}}
-          formObject={formSchema}
-          setForm={setForm}
-        >
+        <AppForm formObject={formSchema} setForm={setForm}>
           <h1 className="font-semibold text-3xl after:block w-fit after:h-[3px] after:w-[60%] after:bg-[#D20240] after:rounded-sm mb-2">
             Criação de fórum
           </h1>

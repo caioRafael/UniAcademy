@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import Graduation from '@/types/Graduation'
+import { ListResponse } from '@/types/ListResponse'
 
 export class GraduationsService
   implements ResourceService<Graduation, Graduation>
@@ -19,10 +20,10 @@ export class GraduationsService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<Graduation> {
+  async findAll(token: string): Promise<ListResponse<Graduation>> {
     const response = await this.baseApi.getAll(`/api/categoria-curso/`, token)
 
-    return response.data as Graduation
+    return response.data
   }
 
   async findOne(id: string, token: string): Promise<Graduation | null> {

@@ -1,13 +1,12 @@
 import Entity from './Entity'
 
-export interface ForumItem {
-  id: number
-  nome_usuario_criacao: string
+export interface ForumItem extends Entity {
+  nome_usuario_criacao?: string
   titulo: string
   assunto: string
   mensagem: string
-  data_criacao: string
-  arquivo: string
+  data_criacao?: string
+  arquivo?: string | File
   usuario_criacao: number
 }
 export default interface Forum extends Entity {

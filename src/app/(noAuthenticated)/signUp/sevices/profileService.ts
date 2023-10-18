@@ -1,5 +1,6 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
+import { ListResponse } from '@/types/ListResponse'
 import Profile from '@/types/Profile'
 
 export class ProfileService implements ResourceService<Profile, Profile> {
@@ -13,7 +14,10 @@ export class ProfileService implements ResourceService<Profile, Profile> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(arenaId: string, token: string): Promise<Profile[]> {
+  async findAll(
+    arenaId: string,
+    token: string,
+  ): Promise<ListResponse<Profile>> {
     throw new Error('Method not implemented.')
   }
 

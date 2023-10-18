@@ -43,6 +43,7 @@ export function ModuleItem(props: ModuleItemProps) {
     )
 
     setModuleList(alterModuleList)
+    // eslint-disable-next-line
   }, [title, videoList])
 
   return (

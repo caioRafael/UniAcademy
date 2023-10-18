@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import Favorite from '@/types/Favorite'
+import { ListResponse } from '@/types/ListResponse'
 
 export class FavoritesService implements ResourceService<Favorite, Favorite> {
   baseApi: IBaseApi<Favorite, Favorite>
@@ -17,10 +18,10 @@ export class FavoritesService implements ResourceService<Favorite, Favorite> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<Favorite> {
+  async findAll(token: string): Promise<ListResponse<Favorite>> {
     const response = await this.baseApi.getAll(`/api/favoritos-aulas/`, token)
 
-    return response.data as Favorite
+    return response.data
   }
 
   async findOne(id: string, token: string): Promise<Favorite | null> {

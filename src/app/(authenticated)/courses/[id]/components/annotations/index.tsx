@@ -21,8 +21,8 @@ export const Annotations = ({ token, usernameId }: AnnotationsProps) => {
   const [annotationFieldValue, setAnnotationFieldValue] = useState<string>('')
   const [selectedAnnotation, setSelectedAnnotation] =
     useState<AnnotationItem | null>(null)
-  const { data, isLoading } = annotationQueryService.useFindAll(token)
-  const dataAnnotation = data as Annotation
+  const { data: dataAnnotation, isLoading } =
+    annotationItemQueryService.useFindAll(token)
 
   const { mutateAsync: deleteAnnotation } =
     annotationQueryService.useDelete(token)
@@ -92,41 +92,42 @@ export const Annotations = ({ token, usernameId }: AnnotationsProps) => {
             Suas anotações
           </h3>
         )}
-        {dataAnnotation?.results?.map((annotation: AnnotationItem) => {
-          return (
-            annotation.aula === selectedClass?.id && (
-              <div
-                key={annotation.id}
-                className="bg-white mb-5 p-3 rounded border-xxs border-border flex justify-between"
-              >
-                <p className="text-black-1 text-xxs font-normal">
-                  {annotation.anotacao}
-                </p>
-                <Popover>
-                  <PopoverTrigger>
-                    <MoreVertical className="self-start cursor-pointer" />
-                  </PopoverTrigger>
-                  <PopoverContent className="flex flex-col border-2 w-28 gap-6 h-28">
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => selectAnnotationToEdit(annotation)}
-                    >
-                      Editar
-                    </span>
-                    <span
-                      className="cursor-pointer"
-                      onClick={async () =>
-                        await deleteAnnotation(String(annotation.id))
-                      }
-                    >
-                      Excluir
-                    </span>
-                  </PopoverContent>
-                </Popover>
-              </div>
+        {dataAnnotation &&
+          dataAnnotation?.results?.map((annotation: AnnotationItem) => {
+            return (
+              annotation.aula === selectedClass?.id && (
+                <div
+                  key={annotation.id}
+                  className="bg-white mb-5 p-3 rounded border-xxs border-border flex justify-between"
+                >
+                  <p className="text-black-1 text-xxs font-normal">
+                    {annotation.anotacao}
+                  </p>
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreVertical className="self-start cursor-pointer" />
+                    </PopoverTrigger>
+                    <PopoverContent className="flex flex-col border-2 w-28 gap-6 h-28">
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => selectAnnotationToEdit(annotation)}
+                      >
+                        Editar
+                      </span>
+                      <span
+                        className="cursor-pointer"
+                        onClick={async () =>
+                          await deleteAnnotation(String(annotation.id))
+                        }
+                      >
+                        Excluir
+                      </span>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )
             )
-          )
-        })}
+          })}
       </div>
     </div>
   )

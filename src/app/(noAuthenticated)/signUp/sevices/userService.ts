@@ -1,6 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import { getUser } from '@/lib/auth'
+import { ListResponse } from '@/types/ListResponse'
 import User from '@/types/User'
 
 export class UserService implements ResourceService<User, User> {
@@ -14,7 +15,7 @@ export class UserService implements ResourceService<User, User> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(arenaId: string, token: string): Promise<User[]> {
+  async findAll(arenaId: string, token: string): Promise<ListResponse<User>> {
     throw new Error('Method not implemented.')
   }
 

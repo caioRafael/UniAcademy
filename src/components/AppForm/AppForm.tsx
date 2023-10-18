@@ -10,7 +10,7 @@ interface AppFormProps {
   children: ReactNode
   className?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSubmit: (values: z.infer<any>) => Promise<void>
+  onSubmit?: (values: z.infer<any>) => Promise<void>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formObject: z.ZodObject<any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +32,10 @@ export function AppForm(props: AppFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={className}>
+      <form
+        onSubmit={onSubmit ? form.handleSubmit(onSubmit) : undefined}
+        className={className}
+      >
         {children}
       </form>
     </Form>

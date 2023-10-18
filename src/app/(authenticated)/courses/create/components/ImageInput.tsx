@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Plus, Trash2 } from 'lucide-react'
 import Image from 'next/image'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { useCourseContext } from '../context/CourseContext'
 
 export function ImageInput() {

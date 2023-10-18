@@ -25,7 +25,10 @@ interface ContentProps {
 const formSchema = z.object({})
 
 export const Content = ({ token, id, usuario_criacao }: ContentProps) => {
-  const { data, isLoading } = forumItemQueryService.useFindOne(id, token)
+  const { data, isLoading } = forumItemQueryService.useFindOne(
+    String(id),
+    token,
+  )
   const [form, setForm] = useState<UseFormReturn | undefined>(undefined)
   const [isLoadingSentAnswer, setIsLoadingSentAnswer] = useState(false)
   const { mutateAsync: createForum } =
@@ -74,7 +77,6 @@ export const Content = ({ token, id, usuario_criacao }: ContentProps) => {
                   <span className="text-xs">Limite de 240 caracteres</span>
                 </div>
                 <AppForm
-                  onSubmit={() => {}}
                   formObject={formSchema}
                   setForm={setForm}
                   className="flex flex-col gap-8 items-end relative"

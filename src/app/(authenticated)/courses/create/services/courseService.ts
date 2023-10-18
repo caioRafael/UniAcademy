@@ -22,7 +22,7 @@ export class CourseService implements ResourceService<Course, Course> {
 
   async findAll(
     token: string,
-    categoryId?: number,
+    // categoryId?: number,
   ): Promise<ListResponse<Course>> {
     const response = await this.baseApi.getAll(`/api/cursos/?categoria`, token)
 

@@ -61,12 +61,12 @@ export function ForumItem({
         <Link
           target="_blank"
           className="flex flex-row gap-2"
-          href={arquivo || ''}
+          href={(arquivo as string) || ''}
         >
           <Paperclip width={24} height={24} className="text-black opacity-50" />
           <p>Arquivo anexado</p>
         </Link>
-        <p>Data de criação: {formatDate(data_criacao)}</p>
+        <p>Data de criação: {formatDate(data_criacao as string)}</p>
       </div>
     </div>
   )
