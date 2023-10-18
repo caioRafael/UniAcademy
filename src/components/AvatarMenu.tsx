@@ -35,7 +35,7 @@ export function AvatarMenu(props: AvatarMenuProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Opções de perfil</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push('profile')}>
+        <DropdownMenuItem onClick={() => router.push('/profile')}>
           Vizualizar perfil
         </DropdownMenuItem>
       </DropdownMenuContent>

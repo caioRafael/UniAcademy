@@ -9,6 +9,7 @@ import { ResourceService } from './ResourceService'
 import { toast } from '@/components/ui/use-toast'
 import { queryClient } from '@/providers/QueryProvider'
 import { AxiosError } from 'axios'
+import { ListResponse } from '@/types/ListResponse'
 
 export class ResourceQueryService<Q, C> {
   resourceService: ResourceService<Q, C>
@@ -30,7 +31,7 @@ export class ResourceQueryService<Q, C> {
     this.successDeleteMessage = successDeleteMessage
   }
 
-  useFindAll(...options: unknown[]): UseQueryResult<Q[] | Q, Error> {
+  useFindAll(...options: unknown[]): UseQueryResult<ListResponse<Q>, Error> {
     return useQuery([this.key, ...options], () =>
       this.resourceService.findAll(...options),
     )

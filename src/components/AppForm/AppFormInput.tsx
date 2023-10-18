@@ -19,10 +19,20 @@ interface AppFormInputProps {
   description?: string
   required?: boolean
   type: string
+  maxLength?: number
 }
 
 export function AppFormInput(props: AppFormInputProps) {
-  const { label, name, form, placeholder, description, required, type } = props
+  const {
+    label,
+    name,
+    form,
+    placeholder,
+    description,
+    required,
+    type,
+    maxLength,
+  } = props
 
   return (
     <FormField
@@ -34,7 +44,12 @@ export function AppFormInput(props: AppFormInputProps) {
             {label} {required && <span className="text-darkRed">*</span>}
           </FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} type={type} />
+            <Input
+              maxLength={maxLength}
+              placeholder={placeholder}
+              {...field}
+              type={type}
+            />
           </FormControl>
           <FormDescription>{description}</FormDescription>
           <FormMessage title={label} />

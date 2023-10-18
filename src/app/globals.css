@@ -33,17 +33,22 @@
     --white: #FFFFFF;
     --black-4: #5E5E5E;
     --black: #000000;
+    --black-1: #111111;
+    --black-2: #393939;
+    --dark-grey: #181818;
     --dark-red: #D20240;
     --fucsia: #EA145A;
     --hot-pink-500: #FE146F;
     --hot-pink-200: #FB3EB0;
     --pink-10: #FFCACB;
 
+    --check-green: #288A2C;
     --bluish-green: #02ACA8;
     --dark-blue-green: #006577;
     --dark-blue: #0A3947;
     --navy-blue: #023139;
     --midnight-blue: #082127;
+    --oxford-blue: #0F172A;
 
     --border: #CBD5E1;
     --input: #CBD5E1;

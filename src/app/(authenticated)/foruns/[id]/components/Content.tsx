@@ -1,50 +1,123 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { forumItemQueryService, forumQueryService } from '../../services'
-import { getInitialLetters } from '@/utils/getInitialLetters'
+import {
+  createForumAnswerQueryService,
+  forumAnswersQueryService,
+  forumItemQueryService,
+} from '../../services'
+import { ForumItem } from '../../components/forumItem'
+import { Spin } from '@/components/spin'
+import { Answer } from './Answer'
+import * as z from 'zod'
+import { UseFormReturn } from 'react-hook-form'
+import { useState } from 'react'
+import { AppForm } from '@/components/AppForm/AppForm'
+import { AppFormTextAreaInput } from '@/components/AppForm/AppFormTextAreaInput'
+import ForumAnswer from '@/types/ForumAnswers'
 
 interface ContentProps {
   token: string
-  id: string
+  id: number
+  usuario_criacao: number
 }
 
-export const Content = ({ token, id }: ContentProps) => {
-  const { data, isLoading, error } = forumItemQueryService.useFindOne(id, token)
-  console.log('data', data, isLoading, error)
+const formSchema = z.object({})
+
+export const Content = ({ token, id, usuario_criacao }: ContentProps) => {
+  const { data, isLoading } = forumItemQueryService.useFindOne(id, token)
+  const [form, setForm] = useState<UseFormReturn | undefined>(undefined)
+  const [isLoadingSentAnswer, setIsLoadingSentAnswer] = useState(false)
+  const { mutateAsync: createForum } =
+    createForumAnswerQueryService.useCreate(token)
+
+  const forumAnswer = forumAnswersQueryService.useFindAll(token, id)
+  const answers = forumAnswer.data as ForumAnswer
+
+  const handleSubmitAnswer = async () => {
+    setIsLoadingSentAnswer(true)
+
+    const values = form?.getValues()
+
+    const data = { ...values }
+    if (data.texto === undefined || data.texto === '') {
+      setIsLoadingSentAnswer(false)
+      return
+    }
+
+    const result = await createForum({
+      texto: data.texto,
+      usuario_criacao,
+      forum: id,
+    })
+
+    if (result?.error) {
+      setIsLoadingSentAnswer(false)
+      return
+    }
+
+    form?.reset({ texto: '' })
+    forumAnswer.refetch()
+    setIsLoadingSentAnswer(false)
+  }
 
   return (
     <section className="pl-6">
-      <p className="text-xxs">Responder Mensagem do Fórum</p>
-      <div className="w-full mt-1 border rounded-sm overflow-hidden rounded-sm">
-        <header className="bg-gray px-6 py-3 text-xxs flex justify-between">
-          <div className="flex  gap-4 ">
-            <span>{data?.titulo}</span>
-            <span>{data?.nome_usuario_criacao}</span>
-          </div>
-          <span>{data?.data_criacao}</span>
-        </header>
-        <main className="flex flex-row py-10 px-24 gap-8">
-          <Avatar className="w-[60px] h-[60px]">
-            <AvatarImage src="" />
-            <AvatarFallback>
-              {getInitialLetters(data?.nome_usuario_criacao ?? '')}
-            </AvatarFallback>
-          </Avatar>
-          <div className="w-full flex flex-col gap-10">
-            <p>{data?.mensagem}</p>
-            <form className="flex flex-col gap-8 items-end">
-              <Textarea
-                className="text-[14px]"
-                placeholder="Responder mensagem"
-              />
-              <Button className="w-[150px]">Enviar</Button>
-            </form>
-          </div>
+      {!isLoading ? (
+        <main>
+          {data && (
+            <>
+              <ForumItem isLast {...data} />
+              <div className="w-full flex flex-col ">
+                <div className="flex flex-row justify-between mt-8 mb-1">
+                  <span className="text-xs">Sua resposta</span>
+                  <span className="text-xs">Limite de 240 caracteres</span>
+                </div>
+                <AppForm
+                  onSubmit={() => {}}
+                  formObject={formSchema}
+                  setForm={setForm}
+                  className="flex flex-col gap-8 items-end relative"
+                >
+                  <span className=" absolute bottom-0 left-[0px] top-[9px] h-[14px] w-[2px] bg-[#D20240] arounded-sm" />
+                  <AppFormTextAreaInput
+                    type="text"
+                    placeholder="Escreva sua resposta"
+                    maxLength={240}
+                    required
+                    name="texto"
+                    form={form as UseFormReturn}
+                  />
+                  <Button
+                    onClick={handleSubmitAnswer}
+                    type="submit"
+                    className="w-[150px]"
+                  >
+                    {isLoadingSentAnswer ? <Spin /> : 'Responder'}
+                  </Button>
+                </AppForm>
+              </div>
+            </>
+          )}
         </main>
-      </div>
+      ) : (
+        <Spin />
+      )}
+      {!forumAnswer.isLoading && (
+        <div className="relative">
+          <h1 className="font-medium pl-1 text-sm w-fit after:absolute after:bottom-0 after:left-[-2px] after:top-[9px] after:h-[13px] after:w-[2px] after:bg-[#D20240] after:rounded-sm mb-2">
+            {' '}
+            Respostas
+          </h1>
+          <div>
+            {answers.results.map((item) => (
+              <div key={item.id} className="mb-4">
+                <Answer {...item} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   )
 }

@@ -6,13 +6,23 @@ export interface ICardProps {
   description: string
   url: string
   tag: string
+  className?: string
+  onClick?: () => void
 }
 
-export function Card({ title, description, tag, url }: ICardProps) {
+export function Card({
+  title,
+  description,
+  tag,
+  url,
+  className,
+  onClick,
+}: ICardProps) {
   return (
     <C.Card
       style={{ backgroundImage: `url(${url})` }}
-      className="bg-no-repeat bg-cover bg-center hover:cursor-pointer hover:brightness-75 transition-all border-none"
+      className={`bg-no-repeat bg-cover bg-center hover:cursor-pointer hover:brightness-75 transition-all border-none ${className}`}
+      onClick={onClick}
     >
       <C.CardContent className="h-full flex flex-col justify-between gap-6 pt-4 bg-gradient-to-b from-transparent to-black rounded-lg">
         <div>

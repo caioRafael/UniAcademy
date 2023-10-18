@@ -6,9 +6,14 @@ import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
 import { getUser } from '@/lib/auth'
 import { AvatarMenu } from '@/components/AvatarMenu'
 import Profile from '@/types/Profile'
+import { DropdownMenuDemo } from './DropdownMenuDemo/DropdownMenuDemo'
 import { ProfileContainer } from '@/components/ProfileContainer'
 import { BellRing } from 'lucide-react'
 import SideBar from '@/components/SideBar'
+
+import logo from '@/assets/logo.svg'
+import Image from 'next/image'
+
 interface AppLayoutProps {
   children: ReactNode
 }
@@ -21,9 +26,8 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   return (
     <div className="flex flex-col max-h-screen">
       <header className="bg-primary px-10 py-5 flex justify-between items-center h-16">
-        <h1 className="font-polarisFuturistic text-3xl text-white">
-          uniacademy
-        </h1>
+        <Image src={logo} height={30} width={304} alt="Logo UniAcademy" />
+
         <input
           type="text"
           className="bg-white rounded-sm w-[500px] py-2.5 px-2 placeholder:text-slate-400"
@@ -31,7 +35,9 @@ export default async function AppLayout({ children }: AppLayoutProps) {
         />
         <div className="flex items-center justify-center gap-8">
           <div className="text-white">
-            <BellRing />
+            <DropdownMenuDemo>
+              <BellRing />
+            </DropdownMenuDemo>
           </div>
           <AvatarMenu profile={profile as Profile} />
         </div>
