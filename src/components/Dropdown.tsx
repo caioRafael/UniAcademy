@@ -21,18 +21,15 @@ export function Dropdown(props: DropdownProps) {
   const { options, value, placeholder, setValue } = props
   return (
     <Select onValueChange={(value) => setValue(value)} value={value}>
-      <SelectTrigger className="w-full">
-        <SelectValue
-          placeholder={placeholder}
-          className="font-medium text-xs"
-        />
+      <SelectTrigger className="w-full bg-white text-xxs">
+        <SelectValue placeholder={placeholder} className=" text-xxs" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup className="font-medium text-xs">
+        <SelectGroup className="font-medium text-xxs">
           {options.map((option) => (
             <SelectItem
               key={option.value}
-              className="font-medium text-xs"
+              className="font-medium text-xxs"
               value={option.value}
             >
               {option.label}

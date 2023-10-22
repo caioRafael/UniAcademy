@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { noticeBoardQueryService } from '../services'
 import { CalendarDays } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'

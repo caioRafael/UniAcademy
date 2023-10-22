@@ -1,6 +1,5 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
-import { getUser } from '@/lib/auth'
 import { ListResponse } from '@/types/ListResponse'
 import User from '@/types/User'
 

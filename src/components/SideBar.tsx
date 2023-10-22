@@ -1,15 +1,10 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-import Profile from '@/types/Profile'
 import { Icon } from './Icon'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { signOut } from 'next-auth/react'
 
-interface SideBarProps {
-  profile: Profile
-}
-
-const SideBar = ({ profile }: SideBarProps) => {
+const SideBar = () => {
   const pathname = usePathname()
   const currentPage = pathname.split('/')[1]
   const router = useRouter()

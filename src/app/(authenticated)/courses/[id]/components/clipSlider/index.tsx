@@ -12,10 +12,10 @@ interface SliderProps
   showThumb?: boolean
 }
 
-const Slider = React.forwardRef<
+const ClipSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
->(({ className, variant = 'default', showThumb, ...props }, ref) => {
+>(({ className, variant = 'default', showThumb, value, ...props }, ref) => {
   const variantConfig = {
     default: {
       track: 'h-1 bg-secondary',
@@ -34,7 +34,7 @@ const Slider = React.forwardRef<
     <SliderPrimitive.Root
       ref={ref}
       className={cn(
-        'relative flex w-full touch-none select-none items-center cursor-pointer',
+        'relative flex w-full touch-none select-none items-center',
         className,
       )}
       {...props}
@@ -46,12 +46,16 @@ const Slider = React.forwardRef<
           className={`absolute h-full ${variantConfig[variant].range}`}
         />
       </SliderPrimitive.Track>
-      {showThumb && (
-        <SliderPrimitive.Thumb className="cursor-pointer block h-3 w-3 rounded-full  bg-secondary ring-offset-background transition-colors focus-visible:outline-none  disabled:pointer-events-none disabled:opacity-50" />
-      )}
+      {showThumb &&
+        value?.map((_, i) => (
+          <SliderPrimitive.Thumb
+            key={i}
+            className="block h-3 w-3 rounded-full bg-secondary ring-offset-background transition-colors  focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-1 disabled:opacity-50"
+          />
+        ))}
     </SliderPrimitive.Root>
   )
 })
-Slider.displayName = SliderPrimitive.Root.displayName
+ClipSlider.displayName = SliderPrimitive.Root.displayName
 
-export { Slider }
+export { ClipSlider }

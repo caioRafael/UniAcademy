@@ -21,7 +21,7 @@ export interface SubscribeModalProps {
 
 export function SubscribeModal({ token, userId }: SubscribeModalProps) {
   const [showModal, setShowModal] = useState(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading] = useState<boolean>(false)
   const [showButton, setShowButton] = useState(true)
   const { selectedCourse } = useClassContext()
 

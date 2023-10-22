@@ -15,7 +15,6 @@ import { Course } from '@/types/Course'
 import { ListResponse } from '@/types/ListResponse'
 import {
   classRoomQueryService,
-  courseCategoryQueryService,
   courseQueryService,
   moduleQueryService,
 } from '../../../create/services'
@@ -31,7 +30,6 @@ const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
     useClassContext()
   const { data: dataClass } = classRoomQueryService.useFindAll(token)
   const { data: dataModule } = moduleQueryService.useFindAll(token, courseId)
-  const { data: dataCategory } = courseCategoryQueryService.useFindAll(token)
   const { data: course } = courseQueryService.useFindOne(
     String(courseId),
     token as string,

@@ -29,11 +29,11 @@ export class CreateForumAnswerService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<CreateForumAnswer>> {
+  async findAll(): Promise<ListResponse<CreateForumAnswer>> {
     throw new Error('Method not implemented.')
   }
 
-  async findOne(id: string, token: string): Promise<CreateForumAnswer> {
+  async findOne(): Promise<CreateForumAnswer> {
     throw new Error('Method not implemented.')
   }
 
@@ -41,7 +41,7 @@ export class CreateForumAnswerService
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

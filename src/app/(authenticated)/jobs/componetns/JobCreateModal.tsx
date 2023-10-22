@@ -96,7 +96,7 @@ export function JobCreateModal(props: JobCreateModalProps) {
           </div>
           <div className="flex gap-3 w-full items-center justify-center">
             <Dropdown
-              placeholder="Nivel de experiencia"
+              placeholder="Nível de Experiência"
               options={experienceLevelList}
               value={experiencia}
               setValue={setExperiencia}
@@ -108,7 +108,7 @@ export function JobCreateModal(props: JobCreateModalProps) {
               setValue={setModoDeTrabalho}
             />
             <Dropdown
-              placeholder="Horario"
+              placeholder="Horário"
               options={HourList}
               value={horario}
               setValue={setHorario}

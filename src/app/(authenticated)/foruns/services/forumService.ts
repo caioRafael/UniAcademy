@@ -47,7 +47,7 @@ export class ForumService implements ResourceService<ForumItem, ForumItem> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 
