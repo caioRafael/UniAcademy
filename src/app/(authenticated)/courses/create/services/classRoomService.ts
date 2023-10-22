@@ -20,19 +20,23 @@ export class ClassRoomService implements ResourceService<ClassRoom, ClassRoom> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(): Promise<ListResponse<ClassRoom>> {
-    throw new Error('Method not implemented.')
+  async findAll(token: string): Promise<ListResponse<ClassRoom>> {
+    const response = await this.baseApi.getAll('/api/aulas/?limit=10000', token)
+
+    return response.data as ListResponse<ClassRoom>
   }
 
-  async findOne(): Promise<ClassRoom | null> {
-    throw new Error('Method not implemented.')
+  async findOne(id: string, token: string): Promise<ClassRoom | null> {
+    const response = await this.baseApi.getOne(`/api/aulas/${id}`, token)
+
+    return response.data as ClassRoom
   }
 
   async update(): Promise<ClassRoom | null> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(): Promise<void> {
+  async delete(id: string, token: string): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

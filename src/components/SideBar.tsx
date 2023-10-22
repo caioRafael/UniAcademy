@@ -78,7 +78,7 @@ const SideBar = ({ profile }: SideBarProps) => {
     {
       id: 9,
       title: 'Mural de Avisos',
-      route: 'warnings',
+      route: 'noticeBoard',
       icon: 'album',
     },
     {
@@ -88,7 +88,7 @@ const SideBar = ({ profile }: SideBarProps) => {
       icon: 'message-circle',
     },
     {
-      id: 10,
+      id: 11,
       title: 'Sair',
       route: 'logout',
       icon: 'log-out',

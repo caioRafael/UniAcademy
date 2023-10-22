@@ -1,17 +1,10 @@
 import Entity from './Entity'
 
-export interface FavoriteItem {
+export interface FavoriteItem extends Entity {
   id: number
   usuario: string
   texto: string
   aula: string
   data: string
   anexo: string
-}
-
-export default interface Favorite extends Entity {
-  count: number
-  next: string
-  previous: string
-  results: FavoriteItem[]
 }

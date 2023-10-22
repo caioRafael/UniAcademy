@@ -1,7 +1,7 @@
 import Entity from './Entity'
 
 export interface Course extends Entity {
-  codigo: string
+  codigo?: string
   capa: File | string
   titulo: string
   descricao: string

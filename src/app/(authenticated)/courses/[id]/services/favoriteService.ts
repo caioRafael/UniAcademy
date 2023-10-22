@@ -21,9 +21,9 @@ export class FavoriteService
   }
 
   async findAll(token: string): Promise<ListResponse<FavoriteItem>> {
-    const response = await this.baseApi.getAll(`/api/favoritos-aulas/`, token)
+    const response = await this.baseApi.getAll('/api/favoritos-aulas/', token)
 
-    return response.data
+    return response.data as ListResponse<FavoriteItem>
   }
 
   async findOne(id: string, token: string): Promise<FavoriteItem | null> {

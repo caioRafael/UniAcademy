@@ -7,14 +7,14 @@ import {
   useContext,
   useState,
 } from 'react'
-import { ClassItem } from '@/types/Class'
 import { Course } from '@/types/Course'
+import ClassRoom from '@/types/Classroom'
 
 interface ClassContextState {
   selectedCourse: Course | undefined
   setSelectedCourse: Dispatch<SetStateAction<Course | undefined>>
-  selectedClass: ClassItem | undefined
-  setSelectedClass: Dispatch<SetStateAction<ClassItem | undefined>>
+  selectedClass: ClassRoom | undefined
+  setSelectedClass: Dispatch<SetStateAction<ClassRoom | undefined>>
 }
 
 interface ClassContextProviderProps {
@@ -27,7 +27,7 @@ export const ClassesContextProvider = ({
   children,
 }: ClassContextProviderProps) => {
   const [selectedCourse, setSelectedCourse] = useState<Course>()
-  const [selectedClass, setSelectedClass] = useState<ClassItem>()
+  const [selectedClass, setSelectedClass] = useState<ClassRoom>()
 
   return (
     <ClassContext.Provider

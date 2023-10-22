@@ -22,9 +22,18 @@ export class CourseService implements ResourceService<Course, Course> {
 
   async findAll(
     token: string,
-    // categoryId?: number,
+    categoryId: number,
+    usuario_criacao: number,
+    offset: number | null,
+    // query: string,
+    // ordering: string,
   ): Promise<ListResponse<Course>> {
-    const response = await this.baseApi.getAll(`/api/cursos/?categoria`, token)
+    const response = await this.baseApi.getAll(
+      `/api/cursos/?categoria=${categoryId || ''}&usuario_criacao=${
+        usuario_criacao || ''
+      }&offset=${offset}`,
+      token,
+    )
 
     return response.data
   }
@@ -35,8 +44,14 @@ export class CourseService implements ResourceService<Course, Course> {
     return response.data as Course
   }
 
-  async update(): Promise<Course | null> {
-    throw new Error('Method not implemented.')
+  async update(
+    data: Partial<Course>,
+    token: string,
+    id: string,
+  ): Promise<Course | null> {
+    const response = await this.baseApi.patch(`/api/cursos/${id}/`, token, data)
+
+    return response.data as Course
   }
 
   async delete(): Promise<void> {

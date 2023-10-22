@@ -14,10 +14,7 @@ export class ProfileService implements ResourceService<Profile, Profile> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(
-    arenaId: string,
-    token: string,
-  ): Promise<ListResponse<Profile>> {
+  async findAll(): Promise<ListResponse<Profile>> {
     throw new Error('Method not implemented.')
   }
 

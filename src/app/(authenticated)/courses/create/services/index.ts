@@ -34,4 +34,7 @@ export const courseCategoryService = new CourseCategoryService(categoryBaseApi)
 export const courseCategoryQueryService = new ResourceQueryService(
   'courseCategory',
   courseCategoryService,
+  false,
+  '',
+  'Inscrição feita com sucesso!',
 )

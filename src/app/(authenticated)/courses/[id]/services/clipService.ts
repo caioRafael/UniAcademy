@@ -19,9 +19,9 @@ export class ClipService implements ResourceService<ClipItem, ClipItem> {
   }
 
   async findAll(token: string): Promise<ListResponse<ClipItem>> {
-    const response = await this.baseApi.getAll(`/api/clipes/`, token)
+    const response = await this.baseApi.getAll('/api/clipes/', token)
 
-    return response.data
+    return response.data as ListResponse<ClipItem>
   }
 
   async findOne(id: string, token: string): Promise<ClipItem | null> {

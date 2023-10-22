@@ -3,6 +3,7 @@ import { getUser } from '@/lib/auth'
 import TabsContainer from './components/tabsContainer'
 import Header from './components/header'
 import { ClassesContextProvider } from './context/ClassesContext'
+import ClassVideo from './components/classVideo'
 
 export interface Option {
   id: number
@@ -19,13 +20,17 @@ interface ClassesProps {
 export default async function Classes(props: ClassesProps) {
   const { params } = props
   const { token, profile } = await getUser()
-
+  const userIsTeacher = profile?.tipo_usuario === 'professor'
   return (
     <ClassesContextProvider>
       <div className="w-full flex pl-10 gap-6 justify-between">
         <main className="w-5/6 mt-11">
-          <Header />
-          <div className="bg-red-600 h-60 w-full">...</div>
+          <Header
+            token={token}
+            userIsTeacher={userIsTeacher}
+            userId={profile?.usuario || 0}
+          />
+          <ClassVideo usernameId={profile?.usuario} token={token} />
           <TabsContainer
             courseId={params.id}
             token={token}

@@ -20,8 +20,19 @@ export class ForumService implements ResourceService<ForumItem, ForumItem> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<ForumItem>> {
-    const response = await this.baseApi.getAll('/api/foruns/', token)
+  async findAll(
+    token: string,
+    usuario_criacao: number,
+    query: string,
+    offset: number | null,
+    ordering: string,
+  ): Promise<ListResponse<ForumItem>> {
+    const response = await this.baseApi.getAll(
+      `/api/foruns/?usuario_criacao=${
+        usuario_criacao || ''
+      }&offset=${offset}&search=${query}&ordering=${ordering}`,
+      token,
+    )
 
     return response.data
   }

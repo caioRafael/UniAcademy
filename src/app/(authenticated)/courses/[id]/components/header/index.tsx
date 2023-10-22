@@ -2,14 +2,33 @@
 import { Title } from '@/components/Title'
 import { useClassContext } from '../../context/ClassesContext'
 
-const Header = () => {
-  const { selectedClass } = useClassContext()
+import { SubscribeModal } from '../subscribeModal'
+import { useMemo } from 'react'
+export interface HeaderProps {
+  token: string
+  userIsTeacher: boolean
+  userId: number
+}
+
+const Header = ({ token, userIsTeacher, userId }: HeaderProps) => {
+  const { selectedCourse, selectedClass } = useClassContext()
+
+  const showSubscribeButton = useMemo(() => {
+    if (!selectedCourse) {
+      return false
+    }
+    if (userIsTeacher) {
+      return false
+    }
+    return !selectedCourse?.usuarios_com_acesso?.includes(userId)
+  }, [selectedCourse?.usuarios_com_acesso])
+
   return (
     <div className="flex justify-between items-center mb-4">
-      <Title title={selectedClass?.titulo || ''} />
-      <span className="text-darkRed text-xxs font-medium">
-        Relatar Problema
-      </span>
+      <div className="w-[70%]">
+        <Title title={selectedClass?.titulo?.replace('.mp4', '') || ''} />
+      </div>
+      {showSubscribeButton && <SubscribeModal userId={userId} token={token} />}
     </div>
   )
 }

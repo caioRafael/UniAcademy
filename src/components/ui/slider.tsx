@@ -23,11 +23,11 @@ const Slider = React.forwardRef<
     },
     video: {
       track: 'h-1 bg-white',
-      range: 'bg-primary rounded-full',
+      range: 'bg-secondary rounded-full',
     },
     volume: {
-      track: 'h-1 bg-gray-400',
-      range: 'bg-white rounded-full',
+      track: 'h-1 bg-white bg-opacity-5 rounded-full',
+      range: 'bg-secondary rounded-full',
     },
   }
   return (
@@ -47,7 +47,7 @@ const Slider = React.forwardRef<
         />
       </SliderPrimitive.Track>
       {showThumb && (
-        <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+        <SliderPrimitive.Thumb className="block h-3 w-3 rounded-full  bg-secondary ring-offset-background transition-colors focus-visible:outline-none  disabled:pointer-events-none disabled:opacity-50" />
       )}
     </SliderPrimitive.Root>
   )

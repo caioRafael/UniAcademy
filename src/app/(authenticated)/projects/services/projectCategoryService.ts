@@ -21,10 +21,7 @@ export class ProjectCategoryService
   }
 
   async findAll(token: string): Promise<ListResponse<Category>> {
-    const response = await this.baseApi.getAll(
-      '/api/categoria-projetos/',
-      token,
-    )
+    const response = await this.baseApi.getAll('/api/categoria-projeto/', token)
 
     return response.data as ListResponse<Category>
   }

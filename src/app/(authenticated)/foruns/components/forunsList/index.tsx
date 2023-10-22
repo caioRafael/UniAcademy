@@ -11,15 +11,22 @@ export interface ForunsListProps {
   token: string
   usuario_criacao?: number
   query?: string
+  ordering: string
 }
 
-export function ForunsList({ token, usuario_criacao, query }: ForunsListProps) {
+export function ForunsList({
+  token,
+  usuario_criacao,
+  query,
+  ordering,
+}: ForunsListProps) {
   const [currentPage, setCurrentPage] = useState(0)
   const { data, isLoading } = forumItemQueryService.useFindAll(
     token,
     usuario_criacao,
     query,
     currentPage,
+    ordering,
   )
 
   const displayCurrentPage = currentPage / 10 + 1
@@ -28,6 +35,9 @@ export function ForunsList({ token, usuario_criacao, query }: ForunsListProps) {
   }, [data])
 
   const totalPages = useMemo(() => {
+    if (dataForum?.count === 0) {
+      return 1
+    }
     return Math.ceil(dataForum?.count / 10)
   }, [data])
 

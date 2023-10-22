@@ -13,7 +13,7 @@ export class CommentService
   }
 
   async create(data: CommentItem, token: string): Promise<CommentItem | null> {
-    const response = await this.baseApi.post(`/api/comentarios/`, data, token)
+    const response = await this.baseApi.post('/api/comentarios/', data, token)
 
     return response.data as CommentItem
   }
@@ -22,10 +22,17 @@ export class CommentService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<CommentItem>> {
-    const response = await this.baseApi.getAll(`/api/comentarios/`, token)
+  async findAll(
+    token: string,
+    offset: number | null,
+    classroom: number,
+  ): Promise<ListResponse<CommentItem>> {
+    const response = await this.baseApi.getAll(
+      `/api/comentarios/?offset=${offset}&aula=${classroom}`,
+      token,
+    )
 
-    return response.data
+    return response.data as ListResponse<CommentItem>
   }
 
   async findOne(id: string, token: string): Promise<CommentItem | null> {
@@ -44,7 +51,7 @@ export class CommentService
   }
 
   async delete(id: string, token: string): Promise<void> {
-    throw new Error('Method not implemented.')
+    await this.baseApi.delete(`/api/comentarios/${id}`, token)
   }
 
   async changeSituation(): Promise<CommentItem | null> {

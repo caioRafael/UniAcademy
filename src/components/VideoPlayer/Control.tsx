@@ -30,10 +30,10 @@ export function Control({
   showRewind,
 }: ControlProps) {
   return (
-    <div className=" absolute bottom-0 left-0 right-0 top-0">
-      <div className="w-full h-full" onClick={onPlayPause} />
+    <div className="bg-primary pt-3 pb-3 rounded-b-[6px]">
+      <div className="absolute  top-0 w-full h-full" onClick={onPlayPause} />
 
-      <div className="absolute left-0 right-0 bottom-0">
+      <div className=" left-0 right-0 bottom-0">
         <div className="slider__container">
           <Slider
             min={0}
@@ -67,6 +67,7 @@ export function Control({
               onValueChange={onVolumeChangeHandler}
               defaultValue={[volume * 100]}
               variant="volume"
+              showThumb
               className="w-20"
             />
           </div>

@@ -1,6 +1,6 @@
 import Entity from './Entity'
 
-export interface AnnotationItem {
+export interface AnnotationItem extends Entity {
   id?: number
   data_criacao?: string
   data_atualizacao?: string
@@ -9,11 +9,4 @@ export interface AnnotationItem {
   aula: number
   anotacao: string
   duracao?: string
-}
-
-export default interface Annotation extends Entity {
-  count: number
-  next: string
-  previous: string
-  results: AnnotationItem[]
 }

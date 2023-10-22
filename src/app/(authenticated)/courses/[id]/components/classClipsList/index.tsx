@@ -1,14 +1,14 @@
-import { clipItemQueryService } from '../../services/clips'
-import Clip, { ClipItem } from '@/types/Clip'
+import { ClipItem } from '@/types/Clip'
 import Image from 'next/image'
 import clipIcon from '../../../../../../assets/clip-icon.png'
+import { clipItemQueryService } from '../../services'
 
 export interface ClassClipsListProps {
   token: string
 }
 
 export const ClassClipsList = ({ token }: ClassClipsListProps) => {
-  const { data: dataClip, isLoading } = clipItemQueryService.useFindAll(token)
+  const { data: dataClip } = clipItemQueryService.useFindAll(token)
 
   return (
     <ul>

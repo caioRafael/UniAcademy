@@ -50,6 +50,18 @@ export class BaseApi<Q, C> implements IBaseApi<Q, C> {
     })
   }
 
+  patch(
+    url: string,
+    token?: string,
+    data?: Record<string, unknown> | undefined,
+  ): Promise<Response<C>> {
+    return this.axios.patch(url, data, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : null,
+      },
+    })
+  }
+
   delete(url: string, token?: string): Promise<Response<void>> {
     return this.axios.delete(url, {
       headers: {

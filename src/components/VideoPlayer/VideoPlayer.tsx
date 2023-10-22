@@ -2,18 +2,36 @@
 
 import ReactPlayer from 'react-player'
 import { Control } from './Control'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { formatTime } from '@/utils/formatTime'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { OnProgressProps } from 'react-player/base'
 import { IVideoState } from '@/types/VideoPlayer'
+import { progressQueryService } from '@/app/(authenticated)/courses/[id]/services/progress'
+import { useClassContext } from '@/app/(authenticated)/courses/[id]/context/ClassesContext'
 
-export function VideoPlayer() {
+export interface VideoPlayerProps {
+  url: string
+  token: string
+  usernameId: number
+  classId: number
+}
+
+export function VideoPlayer({
+  url,
+  usernameId,
+  token,
+  classId,
+}: VideoPlayerProps) {
+  const { mutateAsync: saveProgress } = progressQueryService.useCreate(token)
+  const { selectedClass } = useClassContext()
+
   const videoPlayerRef = useRef<ReactPlayer>(null)
   const handleFullScreen = useFullScreenHandle()
 
+  const [isFirstRender, setIsFirstRender] = useState(true)
   const [videoState, setVideoState] = useState<IVideoState>({
-    playing: true,
+    playing: false,
     muted: false,
     volume: 0.5,
     playbackRate: 1.0,
@@ -33,6 +51,45 @@ export function VideoPlayer() {
 
   const formatCurrentTime = formatTime(currentTime)
   const formatDuration = formatTime(duration)
+
+  function calcuteProgressPercentage() {
+    return (currentTime / duration) * 100
+  }
+
+  const currentProgress = calcuteProgressPercentage()
+
+  const saveVideoProgress = async () => {
+    if (currentProgress)
+      await saveProgress({
+        progresso:
+          currentProgress > 98 ? '100' : currentProgress.toFixed()?.toString(),
+        usuario: usernameId,
+        aula: classId,
+      })
+  }
+
+  useEffect(() => {
+    saveVideoProgress()
+    return () => {
+      saveVideoProgress()
+    }
+  }, [selectedClass, playing])
+
+  const seekToHandler = () => {
+    videoPlayerRef.current?.seekTo(
+      duration *
+        ((selectedClass?.meu_progresso_read?.progresso as number) / 100),
+    )
+  }
+
+  useEffect(() => {
+    seekToHandler()
+  }, [selectedClass?.meu_progresso_read])
+
+  useEffect(() => {
+    if (isFirstRender) return
+    seekToHandler()
+  }, [isFirstRender])
 
   const playPauseHandler = () => {
     setVideoState({ ...videoState, playing: !videoState.playing })
@@ -91,8 +148,16 @@ export function VideoPlayer() {
   }
 
   const bufferEndHandler = () => {
-    // console.log('buffering stoped, play')
     setVideoState({ ...videoState, buffer: false })
+  }
+
+  const onEndHandler = () => {
+    setVideoState({ ...videoState, playing: false })
+    saveVideoProgress()
+  }
+
+  const onReadyHandler = () => {
+    setIsFirstRender(false)
   }
 
   return (
@@ -103,7 +168,7 @@ export function VideoPlayer() {
       <div className="w-full aspect-video relative">
         <ReactPlayer
           ref={videoPlayerRef}
-          url="https://www.youtube.com/watch?v=oITDcIjJBlY"
+          url={url}
           width="100%"
           height="100%"
           playing={playing}
@@ -112,7 +177,9 @@ export function VideoPlayer() {
           onProgress={progressHandler}
           onBuffer={bufferStartHandler}
           onBufferEnd={bufferEndHandler}
+          onEnded={onEndHandler}
           controls={false}
+          onReady={onReadyHandler}
         />
 
         <Control

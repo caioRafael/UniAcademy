@@ -1,19 +1,16 @@
 'use client'
-import { MoreVertical } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MoreVertical } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  commentItemQueryService,
-  commentQueryService,
-} from '../../services/comment'
-import Comment, { CommentItem } from '@/types/Comment'
+import { CommentItem } from '@/types/Comment'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useClassContext } from '../../context/ClassesContext'
+import { commentItemQueryService } from '../../services'
 
 export interface CommentsListProps {
   token: string
@@ -22,18 +19,42 @@ export interface CommentsListProps {
 }
 
 const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
+  const initalsName = username?.split(' ') as string[]
   const { selectedClass } = useClassContext()
   const [commentFieldValue, setCommentFieldValue] = useState<string>('')
   const [selectedComment, setSelectedComment] = useState<CommentItem | null>(
     null,
   )
-  const { data: dataComment } = commentItemQueryService.useFindAll(token)
-  const { mutateAsync: deleteComment } = commentQueryService.useDelete(token)
+  const [currentPage, setCurrentPage] = useState<number>(0)
+  const displayCurrentPage = currentPage / 10 + 1
+  const inputRef = useRef<HTMLTextAreaElement | null>(null)
+
+  const { data: dataComment, isLoading } = commentItemQueryService.useFindAll(
+    token,
+    currentPage,
+    selectedClass?.id,
+  )
+
+  const { mutateAsync: deleteComment } =
+    commentItemQueryService.useDelete(token)
+
   const { mutateAsync: createComment } =
     commentItemQueryService.useCreate(token)
+
   const { mutateAsync: updateComment } =
     commentItemQueryService.useUpdate(token)
-  const initalsName = username?.split(' ') as string[]
+
+  useEffect(() => {
+    setCurrentPage(0)
+  }, [selectedClass])
+
+  const totalPages = useMemo(() => {
+    if (dataComment?.count === 0) {
+      return 1
+    }
+
+    return Math.ceil(Number(dataComment?.count) / 10)
+  }, [dataComment])
 
   const sendComment = async () => {
     if (selectedComment) {
@@ -46,7 +67,7 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
         await createComment({
           texto: commentFieldValue,
           usuario: usernameId,
-          aula: selectedClass?.id,
+          aula: selectedClass?.id as number,
         })
       }
     }
@@ -56,6 +77,10 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
   const selectCommentToEdit = (comment: CommentItem) => {
     setSelectedComment(comment)
     setCommentFieldValue(comment.texto)
+    document?.getElementById('comment-textarea')?.scrollIntoView({
+      behavior: 'smooth',
+    })
+    inputRef.current && inputRef.current.focus()
   }
 
   const resetComment = () => {
@@ -73,6 +98,8 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
           value={commentFieldValue}
           onChange={(e) => setCommentFieldValue(e.target.value)}
           className="rounded border-xxs border-border h-20 min-h-20 pl-1"
+          ref={inputRef}
+          id="comment-textarea"
         />
         <Button
           className="self-end py-2 px-4 mt-3 mb-7 !text-xxs font-medium"
@@ -82,9 +109,9 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
           Salvar
         </Button>
       </div>
-      {dataComment?.results?.map((comment: CommentItem) => {
-        return (
-          comment.aula === selectedClass?.id && (
+      {!isLoading &&
+        dataComment?.results?.map((comment: CommentItem) => {
+          return (
             <div key={comment.id} className="flex items-start mb-5">
               <Avatar>
                 <AvatarImage src="" />
@@ -126,8 +153,40 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
               </div>
             </div>
           )
-        )
-      })}
+        })}
+      <div className="flex items-center justify-end space-x-2 py-4">
+        {!isLoading && (
+          <>
+            <span className="text-xxs">
+              Página {displayCurrentPage} de {totalPages}
+            </span>
+            <button
+              onClick={() => {
+                setCurrentPage((value) => value - 10)
+              }}
+              disabled={!dataComment?.previous}
+            >
+              <ChevronLeft
+                width={24}
+                height={24}
+                className="text-black opacity-50"
+              />
+            </button>
+            <button
+              onClick={() => {
+                setCurrentPage((value) => value + 10)
+              }}
+              disabled={!dataComment?.next}
+            >
+              <ChevronRight
+                width={24}
+                height={24}
+                className="text-black opacity-50"
+              />
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }

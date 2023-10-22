@@ -1,6 +1,6 @@
 import Entity from './Entity'
 
-export interface ClipItem {
+export interface ClipItem extends Entity {
   id: number
   aula: number
   usuario_criacao: number
@@ -9,11 +9,4 @@ export interface ClipItem {
   tempo_final: string
   titulo: string
   descricao: string
-}
-
-export default interface Clip extends Entity {
-  count: number
-  next: string
-  previous: string
-  results: ClipItem[]
 }

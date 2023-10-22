@@ -14,12 +14,14 @@ import { ListResponse } from '@/types/ListResponse'
 export class ResourceQueryService<Q, C> {
   resourceService: ResourceService<Q, C>
   key: string
+  hideSucessCreateMessage?: boolean
   successCreateMessage?: string
   successUpdateMessage?: string
   successDeleteMessage?: string
   constructor(
     key: string,
     resourceService: ResourceService<Q, C>,
+    hideSucessCreateMessage?: boolean,
     successCreateMessage?: string,
     successUpdateMessage?: string,
     successDeleteMessage?: string,
@@ -27,6 +29,7 @@ export class ResourceQueryService<Q, C> {
     this.resourceService = resourceService
     this.key = key
     this.successCreateMessage = successCreateMessage
+    this.hideSucessCreateMessage = hideSucessCreateMessage
     this.successUpdateMessage = successUpdateMessage
     this.successDeleteMessage = successDeleteMessage
   }
@@ -51,7 +54,10 @@ export class ResourceQueryService<Q, C> {
       (item: C) => this.resourceService.create(item, ...options),
       {
         onSuccess: () => {
-          if (this.successCreateMessage !== '') {
+          if (
+            this.successCreateMessage !== '' &&
+            !this.hideSucessCreateMessage
+          ) {
             toast({
               title: 'Sucesso',
               description: 'Item criado com sucesso',
@@ -72,15 +78,26 @@ export class ResourceQueryService<Q, C> {
     )
   }
 
-  useUpdate(...options: unknown[]): UseMutationResult<C | null, Error, C> {
+  useUpdate(
+    id: string,
+    ...options: unknown[]
+  ): UseMutationResult<C | null, Error, C> {
     return useMutation(
-      (item: C) => this.resourceService.update(item, options),
+      (item: C) => this.resourceService.update(item, id, options),
       {
         onSuccess: () => {
-          toast({
-            title: 'Sucesso',
-            description: 'Atualização realizada com sucesso',
-          })
+          if (this.successUpdateMessage === '') {
+            toast({
+              title: 'Sucesso',
+              description: 'Atualização realizada com sucesso',
+            })
+          } else {
+            toast({
+              title: 'Sucesso',
+              description: 'Inscrição feita com sucesso!',
+            })
+          }
+
           this.invalidateQueries()
         },
         onError: (error) => {

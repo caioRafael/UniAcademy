@@ -22,6 +22,11 @@ export interface IBaseApi<Q, C> {
     token?: string,
     data?: Record<string, any>,
   ): Promise<Response<C>>
+  patch(
+    url: string,
+    token?: string,
+    data?: Record<string, any>,
+  ): Promise<Response<C>>
   delete(url: string, token?: string): Promise<Response<void>>
   upload(
     url: string,

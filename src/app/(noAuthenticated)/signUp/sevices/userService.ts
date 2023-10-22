@@ -15,7 +15,7 @@ export class UserService implements ResourceService<User, User> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(arenaId: string, token: string): Promise<ListResponse<User>> {
+  async findAll(): Promise<ListResponse<User>> {
     throw new Error('Method not implemented.')
   }
 
@@ -33,7 +33,7 @@ export class UserService implements ResourceService<User, User> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

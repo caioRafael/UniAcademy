@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils'
 
 export interface IAMessageProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any
   children?: React.ReactNode
   time: string

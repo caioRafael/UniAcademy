@@ -1,13 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import hero from '@/assets/hero-congratulations.png'
-import { useState } from 'react'
 
-function feedback() {
+const feedback = () => {
   // eslint-disable-next-line
-  const [showCongratulations, setShowCongratulations] = useState<boolean>(false)
+  const [showCongratulations, setShowCongratulations] = useState(false)
 
   const handleClick = () => {
     setShowCongratulations(true)

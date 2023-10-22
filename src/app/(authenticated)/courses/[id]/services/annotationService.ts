@@ -25,10 +25,17 @@ export class AnnotationService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<AnnotationItem>> {
-    const response = await this.baseApi.getAll('/api/anotacoes/', token)
+  async findAll(
+    token: string,
+    offset: number | null,
+    classroom: number,
+  ): Promise<ListResponse<AnnotationItem>> {
+    const response = await this.baseApi.getAll(
+      `/api/anotacoes/?offset=${offset}&aula=${classroom}`,
+      token,
+    )
 
-    return response.data
+    return response.data as ListResponse<AnnotationItem>
   }
 
   async findOne(id: string, token: string): Promise<AnnotationItem | null> {
@@ -50,7 +57,7 @@ export class AnnotationService
   }
 
   async delete(id: string, token: string): Promise<void> {
-    throw new Error('Method not implemented.')
+    await this.baseApi.delete(`/api/anotacoes/${id}`, token)
   }
 
   async changeSituation(): Promise<AnnotationItem | null> {

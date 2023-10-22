@@ -7,7 +7,6 @@ import { getUser } from '@/lib/auth'
 import { AvatarMenu } from '@/components/AvatarMenu'
 import Profile from '@/types/Profile'
 import { ProfileContainer } from '@/components/ProfileContainer'
-import { BellRing } from 'lucide-react'
 import SideBar from '@/components/SideBar'
 
 import logo from '@/assets/logo.svg'
@@ -27,11 +26,6 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       <header className="bg-primary px-10 py-5 flex justify-between items-center h-16">
         <Image src={logo} height={30} width={304} alt="Logo UniAcademy" />
 
-        <input
-          type="text"
-          className="bg-white rounded-sm w-[500px] py-2.5 px-2 placeholder:text-slate-400"
-          placeholder="O que você quer aprender?"
-        />
         <div className="flex items-center justify-center gap-8">
           <AvatarMenu profile={profile as Profile} />
         </div>

@@ -1,12 +1,13 @@
 import { Title } from '@/components/Title'
 import { getUser } from '@/lib/auth'
-import GraduationsList from './components/graduationsList'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ClassesContextProvider } from './[id]/context/ClassesContext'
+import GraduationsList from './components/graduationsList'
 
 export default async function Courses() {
-  const { token, profile } = await getUser()
+  const { token, profile, id } = await getUser()
+
   const userIsTeacher = profile?.tipo_usuario === 'professor'
 
   return (
@@ -22,7 +23,11 @@ export default async function Courses() {
             </Button>
           )}
         </div>
-        <GraduationsList token={token} />
+        <GraduationsList
+          token={token}
+          userIsTeacher={userIsTeacher}
+          userId={id}
+        />
       </div>
     </ClassesContextProvider>
   )

@@ -8,25 +8,18 @@ import {
 } from '@/components/ui/accordion'
 import { Progress } from '@/components/ui/progress'
 import { CheckCircle2, ChevronRight, Play } from 'lucide-react'
-import Class, { ClassItem } from '@/types/Class'
 import { ModuleItem } from '@/types/Module'
 import { useClassContext } from '../../context/ClassesContext'
 import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import {
-  graduationItemQueryService,
-  graduationQueryService,
-} from '../../../services'
-import { GraduationItem } from '@/types/Graduation'
 import { Course } from '@/types/Course'
 import { ListResponse } from '@/types/ListResponse'
 import {
+  classRoomQueryService,
   courseCategoryQueryService,
   courseQueryService,
   moduleQueryService,
 } from '../../../create/services'
-import { classItemQueryService } from '../../services'
-import { Category } from '@/types/Category'
+import ClassRoom from '@/types/Classroom'
 
 interface ClassesPlaylistProps {
   token: string
@@ -34,10 +27,9 @@ interface ClassesPlaylistProps {
 }
 
 const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
-  const pathname = usePathname()
-  const { selectedClass, setSelectedClass, selectedCourse, setSelectedCourse } =
+  const { setSelectedClass, selectedCourse, setSelectedCourse } =
     useClassContext()
-  const { data: dataClass } = classItemQueryService.useFindAll(token)
+  const { data: dataClass } = classRoomQueryService.useFindAll(token)
   const { data: dataModule } = moduleQueryService.useFindAll(token, courseId)
   const { data: dataCategory } = courseCategoryQueryService.useFindAll(token)
   const { data: course } = courseQueryService.useFindOne(
@@ -45,10 +37,8 @@ const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
     token as string,
   )
 
-  console.log(dataModule)
-
   useEffect(() => {
-    const firstModuleId: number = dataModule?.results[0].id as number
+    const firstModuleId: number = dataModule?.results[0]?.id as number
     setSelectedClass(
       dataClass?.results.find(
         (classItem) => classItem.modulo === firstModuleId,
@@ -58,7 +48,7 @@ const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
 
   useEffect(() => {
     setSelectedCourse(course as Course)
-  }, [dataCategory])
+  }, [course])
 
   return (
     <aside className="px-3 pt-10 pb-16 bg-primary w-72 min-h-screen">
@@ -68,7 +58,7 @@ const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
             <div className="flex items-center gap-3 mb-4 justify-between cursor-pointer">
               <Play className="text-darkRed" />
               <span className="text-background text-xxxxs font-semibold">
-                {selectedCourse?.nome}
+                {selectedCourse?.titulo}
               </span>
               <ChevronRight className="text-background" />
             </div>
@@ -92,7 +82,7 @@ const ClassesPlaylist = ({ token, courseId }: ClassesPlaylistProps) => {
                       </AccordionTrigger>
                       <ul className="bg-darkGrey mb-3">
                         {dataClass?.results?.map(
-                          (moduleClass: ClassItem) =>
+                          (moduleClass: ClassRoom) =>
                             moduleClass.modulo === module.id && (
                               <AccordionContent
                                 key={moduleClass.id}

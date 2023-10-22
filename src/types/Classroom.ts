@@ -3,7 +3,9 @@ import Entity from './Entity'
 export default interface ClassRoom extends Entity {
   visto?: number
   favoritou_aula?: string
-  meu_progresso_read?: string
+  meu_progresso_read?: {
+    progresso: number
+  }
   titulo: string
   descricao: string
   trancricao: string

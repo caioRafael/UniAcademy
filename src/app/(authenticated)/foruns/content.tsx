@@ -16,6 +16,8 @@ export interface ContentProps {
 }
 export function Content({ id, token }: ContentProps) {
   const [query, setQuery] = useState('')
+  const [orderForuns, setOrderForuns] = useState('-data_criacao')
+
   return (
     <div className="w-full flex flex-col px-8 pt-16 gap-10">
       <Title title="Fórum" />
@@ -32,16 +34,17 @@ export function Content({ id, token }: ContentProps) {
             <div>
               <RadioGroup
                 className="flex flex-row w-full"
-                defaultValue="comfortable"
+                defaultValue="-data_criacao"
+                onValueChange={(value) => setOrderForuns(value)}
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="default" id="r1" />
+                  <RadioGroupItem value="-data_criacao" id="r1" />
                   <Label className="text-xxs font-normal" htmlFor="r1">
                     Mais recentes
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="comfortable" id="r2" />
+                  <RadioGroupItem value="" id="r2" />
                   <Label className="text-xxs font-normal" htmlFor="r2">
                     Mais antigos
                   </Label>
@@ -60,10 +63,15 @@ export function Content({ id, token }: ContentProps) {
             <TabsTrigger value="id">Meus Fóruns</TabsTrigger>
           </TabsList>
           <TabsContent value="all">
-            <ForunsList token={token} query={query} />
+            <ForunsList token={token} query={query} ordering={orderForuns} />
           </TabsContent>
           <TabsContent value="id">
-            <ForunsList token={token} usuario_criacao={id} query={query} />
+            <ForunsList
+              token={token}
+              usuario_criacao={id}
+              query={query}
+              ordering={orderForuns}
+            />
           </TabsContent>
         </Tabs>
       </div>
