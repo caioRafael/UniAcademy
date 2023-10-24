@@ -13,8 +13,9 @@ import { useState } from 'react'
 export interface ContentProps {
   token: string
   id: number
+  typeUser: string
 }
-export function Content({ id, token }: ContentProps) {
+export function Content({ id, token, typeUser }: ContentProps) {
   const [query, setQuery] = useState('')
   const [orderForuns, setOrderForuns] = useState('-data_criacao')
 
@@ -53,7 +54,9 @@ export function Content({ id, token }: ContentProps) {
             </div>
           </div>
         </div>
-        <CreateForumModal token={token} usuario_criacao={id} />
+        {typeUser !== 'visitante' && (
+          <CreateForumModal token={token} usuario_criacao={id} />
+        )}
       </div>
 
       <div className="w-full">

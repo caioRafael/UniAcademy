@@ -66,10 +66,11 @@ export class ResourceQueryService<Q, C> {
           this.invalidateQueries()
         },
         onError: (error: AxiosError) => {
+          const firstKey = Object.keys(error.response?.data as any)[0]
           if (error) {
             toast({
               title: 'Erro',
-              description: error?.message,
+              description: (error.response?.data as any)[firstKey],
               variant: 'destructive',
             })
           }
@@ -81,7 +82,7 @@ export class ResourceQueryService<Q, C> {
   useUpdate(
     id: string,
     ...options: unknown[]
-  ): UseMutationResult<C | null, Error, C> {
+  ): UseMutationResult<C | null, AxiosError, C> {
     return useMutation(
       (item: C) => this.resourceService.update(item, id, options),
       {
@@ -101,11 +102,14 @@ export class ResourceQueryService<Q, C> {
           this.invalidateQueries()
         },
         onError: (error) => {
-          toast({
-            title: 'Erro',
-            description: error.message,
-            variant: 'destructive',
-          })
+          const firstKey = Object.keys(error.response?.data as any)[0]
+          if (error) {
+            toast({
+              title: 'Erro',
+              description: (error.response?.data as any)[firstKey],
+              variant: 'destructive',
+            })
+          }
         },
       },
     )

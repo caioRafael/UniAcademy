@@ -2,9 +2,15 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { Icon } from './Icon'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
+import { CrownIcon } from 'lucide-react'
 import { signOut } from 'next-auth/react'
+import Profile from '@/types/Profile'
 
-const SideBar = () => {
+interface SideBarProps {
+  profile?: Profile | null
+}
+
+const SideBar = ({ profile }: SideBarProps) => {
   const pathname = usePathname()
   const currentPage = pathname.split('/')[1]
   const router = useRouter()
@@ -13,12 +19,12 @@ const SideBar = () => {
     router.push(`/${route}`)
   }
 
-  async function logout() {
+  async function logout(route: string) {
     await signOut({
       redirect: false,
     })
 
-    router.replace('/')
+    router.replace(route)
   }
 
   const menuOptions = [
@@ -33,18 +39,6 @@ const SideBar = () => {
       title: 'Cursos',
       route: 'courses',
       icon: 'play',
-    },
-    {
-      id: 3,
-      title: 'Favoritos',
-      route: 'favorites',
-      icon: 'heart',
-    },
-    {
-      id: 4,
-      title: 'Mentoria',
-      route: 'mentory',
-      icon: 'users',
     },
     {
       id: 5,
@@ -77,23 +71,33 @@ const SideBar = () => {
       icon: 'album',
     },
     {
-      id: 10,
-      title: 'Chat',
-      route: 'chat',
-      icon: 'message-circle',
-    },
-    {
       id: 11,
       title: 'Sair',
       route: 'logout',
       icon: 'log-out',
-      onClick: logout,
+      onClick: () => logout('/'),
     },
   ]
 
   return (
     <nav className="mt-10 mb-10">
       <div className="w-full h-full flex flex-col gap-2 items-center justify-start border-r border-solid border-border px-5 ">
+        {profile?.tipo_usuario === 'visitante' && (
+          <div className="bg-white border rounded-sm pl-4 pr-4 pt-2 pb-2 mb-5">
+            <div className="flex flex-row justify-between mb-2">
+              <CrownIcon />
+              <button
+                className="text-xxs text-secondary"
+                onClick={() => logout('/signUp')}
+              >
+                Registre-se
+              </button>
+            </div>
+            <p className="text-xxxs font-semibold text-left">
+              Tenha acesso completo registrando-se como aluno ou professor
+            </p>
+          </div>
+        )}
         {menuOptions.map(({ title, route, icon, id, onClick }) => {
           function handleOnClick() {
             if (route === 'logout') {

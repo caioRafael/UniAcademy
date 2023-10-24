@@ -6,7 +6,6 @@ import Annotations from '../annotations'
 import ClassClipsList from '../classClipsList'
 import CommentsList from '../commentsList'
 import ToggleSwitch from '../toggleSwitch'
-import { Star } from 'lucide-react'
 
 interface TabsContainerProps {
   token: string
@@ -52,9 +51,6 @@ const TabsContainer = ({ token, username, usernameId }: TabsContainerProps) => {
           <span className="w-60 h-1 bg-darkRed max-w-64"></span>
         </div>
         <div className="flex gap-2 items-center">
-          <div className="rounded-md p-3 bg-black-1">
-            <Star className="text-white cursor-pointer" />
-          </div>
           <ToggleSwitch
             options={options}
             selectedOption={selectedOption}

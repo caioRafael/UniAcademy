@@ -20,9 +20,14 @@ export class ClassRoomService implements ResourceService<ClassRoom, ClassRoom> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<ClassRoom>> {
-    const response = await this.baseApi.getAll('/api/aulas/?limit=10000', token)
-
+  async findAll(
+    token: string,
+    moduleId?: number,
+  ): Promise<ListResponse<ClassRoom>> {
+    const response = await this.baseApi.getAll(
+      `/api/aulas/?modulo=${moduleId || ''}`,
+      token,
+    )
     return response.data as ListResponse<ClassRoom>
   }
 

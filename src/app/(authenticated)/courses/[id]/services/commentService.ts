@@ -28,7 +28,7 @@ export class CommentService
     classroom: number,
   ): Promise<ListResponse<CommentItem>> {
     const response = await this.baseApi.getAll(
-      `/api/comentarios/?offset=${offset}&aula=${classroom}`,
+      `/api/comentarios/?offset=${offset}&aula=${classroom || ''}`,
       token,
     )
 

@@ -6,7 +6,7 @@ import { getUser } from '@/lib/auth'
 import { CreateProjectModal } from './components/CreateProjectModal'
 
 export default async function Projects() {
-  const { token, id } = await getUser()
+  const { token, id, profile } = await getUser()
   return (
     <div className="w-full flex flex-col px-8 pt-16 gap-10">
       <Title title="Vitrine de projetos" />
@@ -19,7 +19,9 @@ export default async function Projects() {
           />
           <Button>Buscar</Button>
         </div>
-        <CreateProjectModal token={token} userId={id} />
+        {profile?.tipo_usuario === ('aluno' || 'professor') && (
+          <CreateProjectModal token={token} userId={id} />
+        )}
       </div>
       <ProjectsContainer token={token} />
     </div>

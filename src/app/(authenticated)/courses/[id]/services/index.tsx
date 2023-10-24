@@ -8,6 +8,8 @@ import { FavoriteItem } from '@/types/Favorite'
 import { FavoriteService } from './favoriteService'
 import { ClipItem } from '@/types/Clip'
 import { ClipService } from './clipService'
+import { FinalProject } from '@/types/FinalProject'
+import { FinalProjectService } from './finalProject'
 
 const annotationItemBaseApi = new BaseApi<AnnotationItem, AnnotationItem>()
 export const annotationItemService = new AnnotationService(
@@ -37,4 +39,11 @@ export const favoriteItemService = new FavoriteService(favoriteItemBaseApi)
 export const favoriteItemQueryService = new ResourceQueryService(
   'favorite',
   favoriteItemService,
+)
+
+const finalProjectBaseApi = new BaseApi<FinalProject, FinalProject>()
+export const finalProjectService = new FinalProjectService(finalProjectBaseApi)
+export const finalProjectQueryService = new ResourceQueryService(
+  'finalProject',
+  finalProjectService,
 )

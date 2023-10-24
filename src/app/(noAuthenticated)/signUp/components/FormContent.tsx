@@ -13,6 +13,7 @@ import { profileQueryService, userQueryService } from '../sevices'
 import { Spin } from '@/components/spin'
 import { toast } from '@/components/ui/use-toast'
 import { AppFormInputPassword } from '@/components/AppForm/AppFormInputPassword'
+import { CreateUserProfile } from '@/types/Profile'
 
 interface FormContentProps {
   typeProfile: 'professor' | 'aluno' | 'visitante'
@@ -62,7 +63,7 @@ export const FormContent = (props: FormContentProps) => {
   const { typeProfile } = props
   const [form, setForm] = useState<UseFormReturn | undefined>(undefined)
   const [progress, setProgress] = useState<number>(0)
-  const { mutateAsync: save, isLoading } = userQueryService.useCreate()
+  // const { mutateAsync: save, isLoading } = userQueryService.useCreate()
   const { mutateAsync: saveProfile, isLoading: isLoadProfile } =
     profileQueryService.useCreate()
   const router = useRouter()
@@ -86,19 +87,22 @@ export const FormContent = (props: FormContentProps) => {
       throw new Error('As senhas não conferem')
     }
 
-    const response = await save({
-      username: value.email,
-      ...value,
-    })
+    // const response = await save({
+    //   username: value.email,
+    //   ...value,
+    // })
 
-    const responseProfile = await saveProfile({
+    const data = {
+      ...value,
+      username: value.email,
       nome_completo: value.nome_completo,
       tipo_usuario: typeProfile,
       matricula: value.matricula,
-      usuario: response?.id as number,
-    })
+    } as CreateUserProfile
 
-    if (response && responseProfile) {
+    const responseProfile = await saveProfile(data)
+
+    if (responseProfile) {
       const signInResponse = await signIn('credentials', {
         username: value.email,
         password: value.password,
@@ -118,7 +122,7 @@ export const FormContent = (props: FormContentProps) => {
   }
 
   const validateTextButton = () => {
-    if (isLoading || isLoadProfile) return <Spin />
+    if (isLoadProfile) return <Spin />
     return progress === 0 ? 'Prosseguir' : 'Concluir'
   }
 

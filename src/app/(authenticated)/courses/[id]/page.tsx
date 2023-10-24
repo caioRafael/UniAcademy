@@ -40,7 +40,11 @@ export default async function Classes(props: ClassesProps) {
               usernameId={profile?.usuario as number}
             />
           </main>
-          <ClassesPlaylist token={token} courseId={params.id} />
+          <ClassesPlaylist
+            token={token}
+            courseId={params.id}
+            usernameId={profile?.usuario as number}
+          />
         </div>
       </VideoPlayerContextProvider>
     </ClassesContextProvider>

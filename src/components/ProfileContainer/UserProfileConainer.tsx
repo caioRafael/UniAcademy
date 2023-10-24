@@ -1,6 +1,5 @@
 import Profile from '@/types/Profile'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Progress } from '../ui/progress'
 
 interface UserProfileConainerProps {
   profile: Profile
@@ -18,7 +17,7 @@ export function UserProfileConainer(props: UserProfileConainerProps) {
 
       <div className="flex gap-3 items-center">
         <Avatar className="w-14 h-14">
-          <AvatarImage src="" />
+          <AvatarImage src={profile.foto as string} />
           <AvatarFallback className="text-secondary">
             {initalsName[0].charAt(0).toUpperCase()}
             {initalsName[1]?.charAt(0).toUpperCase()}
@@ -26,14 +25,14 @@ export function UserProfileConainer(props: UserProfileConainerProps) {
         </Avatar>
         <section className="flex flex-col">
           <h1 className="text-sm font-semibold">{profile.nome_completo}</h1>
-          <p className="font-normal text-xs">Curso - campus</p>
+          <p className="font-normal text-xs">{profile.tipo_usuario}</p>
         </section>
       </div>
 
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         <h1>Nivel 14</h1>
         <Progress value={74} className="w-2/3 h-2" />
-      </div>
+      </div> */}
     </div>
   )
 }

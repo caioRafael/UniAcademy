@@ -35,6 +35,13 @@ export interface IBaseApi<Q, C> {
     onUploadProgress?: (progressEvent: any) => void,
     signal?: AbortSignal,
   ): Promise<Response<C>>
+  updateUpload(
+    url: string,
+    data: Record<string, any>,
+    token?: string,
+    onUploadProgress?: (progressEvent: any) => void,
+    signal?: AbortSignal,
+  ): Promise<Response<C>>
   download(
     url: string,
     data?: unknown,

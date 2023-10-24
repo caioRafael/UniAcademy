@@ -1,5 +1,4 @@
 import { Github, Instagram, Linkedin } from 'lucide-react'
-import { Button } from '../ui/button'
 
 export function UserSocialMedia() {
   return (
@@ -22,12 +21,12 @@ export function UserSocialMedia() {
         </div>
       </div>
 
-      <h1 className="border-l-4 border-secondary pl-1 font-semibold text-xs">
+      {/* <h1 className="border-l-4 border-secondary pl-1 font-semibold text-xs">
         Seja monitor
       </h1>
       <Button className="border-secondary bg-transparent border-2 text-secondary w-36">
         Saiba mais
-      </Button>
+      </Button> */}
     </div>
   )
 }

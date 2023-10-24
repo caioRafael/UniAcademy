@@ -24,7 +24,7 @@ export function AvatarMenu(props: AvatarMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center justify-center gap-1">
         <Avatar>
-          <AvatarImage src="" />
+          <AvatarImage src={props.profile.foto as string} />
           <AvatarFallback>
             {initalsName[0].charAt(0).toUpperCase()}
             {initalsName[1]?.charAt(0).toUpperCase()}

@@ -43,7 +43,7 @@ export const Content = ({ token, id, usuario_criacao }: ContentProps) => {
     const values = form?.getValues()
 
     const data = { ...values }
-    if (data.texto === undefined || data.texto === '') {
+    if (data.texto === undefined || data.texto?.trim() === '') {
       setIsLoadingSentAnswer(false)
       return
     }
@@ -94,6 +94,7 @@ export const Content = ({ token, id, usuario_criacao }: ContentProps) => {
                     onClick={handleSubmitAnswer}
                     type="submit"
                     className="w-[150px]"
+                    disabled={isLoadingSentAnswer}
                   >
                     {isLoadingSentAnswer ? <Spin /> : 'Responder'}
                   </Button>

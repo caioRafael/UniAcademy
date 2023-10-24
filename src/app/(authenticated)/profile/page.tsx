@@ -1,27 +1,40 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CoursesContainer } from './components/CoursesContainer'
-import { Title } from '../home/components/title'
-import { Card } from '../home/components/card'
+
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { CertificateCard } from './components/CertificateCard'
+import { getUser } from '@/lib/auth'
+import Profile from '@/types/Profile'
 
-export default function Profile() {
+export default async function Profile() {
+  const { id, token, profile } = await getUser()
   return (
     <div className="w-full h-full flex flex-col px-6 pt-14 gap-4 mb-6">
       <div className="grid grid-cols-[1fr_40%] gap-4">
-        <div>
-          <Tabs defaultValue="inProgress">
+        <div className="flex flex-col h-[400px] gap-6">
+          <h1 className="border-l-4 border-secondary pl-1 font-semibold text-xs">
+            Meus cursos
+          </h1>
+          <CoursesContainer
+            userId={id}
+            token={token}
+            profile={profile as Profile}
+          />
+          {/* <Tabs defaultValue="inProgress">
             <TabsList className="mb-7">
               <TabsTrigger value="inProgress">Em progresso</TabsTrigger>
               <TabsTrigger value="concluded">Concluido</TabsTrigger>
             </TabsList>
             <TabsContent value="inProgress">
-              <CoursesContainer />
+              <CoursesContainer
+                userId={id}
+                token={token}
+                profile={profile as Profile}
+              />
             </TabsContent>
             <TabsContent value="concluded">
               <h1>concluido</h1>
             </TabsContent>
-          </Tabs>
+          </Tabs> */}
         </div>
         <div className="flex flex-col h-[400px] gap-6">
           <h1 className="border-l-4 border-secondary pl-1 font-semibold text-xs">
@@ -52,7 +65,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <section>
+      {/* <section className="mt-4">
         <Title title="Materiais produzidos" />
         <div className="flex gap-4 flex-wrap md:flex-nowrap">
           <Card
@@ -74,7 +87,7 @@ export default function Profile() {
             tag="Programação"
           />
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

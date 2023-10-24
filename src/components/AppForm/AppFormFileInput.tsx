@@ -21,10 +21,21 @@ interface AppFormInputProps {
   description?: string
   required?: boolean
   setFile: any
+  inputLabel?: string
+  icon?: any
 }
 
 export function AppFormFileInput(props: AppFormInputProps) {
-  const { label, name, form, description, required, setFile } = props
+  const {
+    label,
+    name,
+    form,
+    description,
+    required,
+    setFile,
+    inputLabel,
+    icon,
+  } = props
 
   const [fileName, setFileName] = useState('')
 
@@ -43,10 +54,10 @@ export function AppFormFileInput(props: AppFormInputProps) {
           <FormLabel className="text-xxs">
             {label} {required && <span className="text-darkRed">*</span>}
             <div className="cursor-pointer mt-2 flex flex-col gap-2 py-5 items-center justify-center  w-full rounded-md border border-border bg-white px-3 py-2 text-xs file:border-0 file:bg-transparent file:text-xs file:font-medium placeholder:text-muted-foreground placeholder:text-xxs focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50">
-              <File width={24} height={24} className="text-black " />
+              {icon || <File width={24} height={24} className="text-black " />}
 
               {fileName === '' ? (
-                <span className="text-xxs">Enviar anexo</span>
+                <span className="text-xxs">{inputLabel || 'Enviar anexo'}</span>
               ) : (
                 <span className="text-xxs">{fileName}</span>
               )}

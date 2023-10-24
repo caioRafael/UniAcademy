@@ -31,10 +31,10 @@ export function Card({
           </Badge>
         </div>
         <div>
-          <C.CardTitle className="flex gap-1 text-white before:block before:h-auto before:w-[4px] before:bg-[#D20240] mb-2 text-sm md:text-2xl">
+          <C.CardTitle className="flex gap-1 text-white before:block before:h-auto before:w-[4px] before:bg-[#D20240] mb-2 text-sm md:text-2xl line-clamp-2">
             {title}
           </C.CardTitle>
-          <C.CardDescription className="text-[#C5C5C5] text-[.8rem] font-normal">
+          <C.CardDescription className="text-[#C5C5C5] text-[.8rem] font-normal line-clamp-4">
             {description}
           </C.CardDescription>
         </div>

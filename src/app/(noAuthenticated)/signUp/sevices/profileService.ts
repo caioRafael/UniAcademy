@@ -1,7 +1,7 @@
 import { IBaseApi } from '@/lib/api/IBaseApi'
 import { ResourceService } from '@/lib/api/ResourceService'
 import { ListResponse } from '@/types/ListResponse'
-import Profile from '@/types/Profile'
+import Profile, { CreateUserProfile } from '@/types/Profile'
 
 export class ProfileService implements ResourceService<Profile, Profile> {
   baseApi: IBaseApi<Profile, Profile>
@@ -22,8 +22,11 @@ export class ProfileService implements ResourceService<Profile, Profile> {
     throw new Error('Method not implemented.')
   }
 
-  async create(data: Profile): Promise<Profile | null> {
-    const response = await this.baseApi.post('/api/profiles/', data)
+  async create(data: CreateUserProfile): Promise<Profile | null> {
+    const response = await this.baseApi.post(
+      '/api/profiles/create_profile/',
+      data,
+    )
 
     return response.data as Profile
   }

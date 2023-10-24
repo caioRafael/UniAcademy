@@ -18,7 +18,7 @@ interface AppLayoutProps {
 
 export default async function AppLayout({ children }: AppLayoutProps) {
   const hasAuthenticated = await getServerSession(nextAuthOptions)
-  const { profile } = await getUser()
+  const { profile, token } = await getUser()
 
   if (!hasAuthenticated) redirect('/')
   return (
@@ -30,9 +30,9 @@ export default async function AppLayout({ children }: AppLayoutProps) {
           <AvatarMenu profile={profile as Profile} />
         </div>
       </header>
-      <ProfileContainer profile={profile as Profile} />
+      <ProfileContainer profile={profile as Profile} token={token} />
       <div className="grid h-full w-full grid-cols-[16rem_1fr]">
-        <SideBar />
+        <SideBar profile={profile} />
         <main className="flex w-full h-full overflow-auto">{children}</main>
       </div>
     </div>

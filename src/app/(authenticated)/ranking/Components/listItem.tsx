@@ -1,7 +1,7 @@
 'use client'
 
-import { CalendarCheck, CheckCircle2 } from 'lucide-react'
-import { Student } from '../page'
+import { CalendarCheck, CheckCircle2, User } from 'lucide-react'
+import { Student } from './Lista'
 import Image from 'next/image'
 
 type Item = {
@@ -15,29 +15,29 @@ export default function ListItem(props: Item) {
       <div className="w-[10%]">
         {props.index === 0 && (
           <Image
+            width={40}
+            height={40}
             alt="colocation"
             src="https://i.imgur.com/0GdmlIu.png"
             className="w-10"
-            width={40}
-            height={40}
           />
         )}
         {props.index === 1 && (
           <Image
+            width={40}
+            height={40}
             alt="colocation"
             src="https://i.imgur.com/Xcu7Ifo.png"
             className="w-10"
-            width={40}
-            height={40}
           />
         )}
         {props.index === 2 && (
           <Image
+            width={40}
+            height={40}
             alt="colocation"
             src="https://i.imgur.com/JAYHwcC.png"
             className="w-10"
-            width={40}
-            height={40}
           />
         )}
       </div>
@@ -46,16 +46,27 @@ export default function ListItem(props: Item) {
       </p>
 
       <div className="flex items-center w-[40%]">
-        <Image
-          className="mr-2 w-10 h-10 rounded-full"
-          src="https://github.com/shadcn.png"
-          width={40}
-          height={40}
-          alt="Profile"
-        />
+        {(props.student?.usuario_completo_read?.profile_read?.foto && (
+          <Image
+            width={40}
+            height={40}
+            alt=""
+            className="mr-2 w-10 h-10 rounded-full"
+            src={props.student?.usuario_completo_read?.profile_read?.foto}
+          />
+        )) || (
+          <div className="mr-2 w-10 h-10 rounded-full flex items-center justify-center">
+            <User />
+          </div>
+        )}
+
         <div>
-          <p className="font-semibold text-darkBlue">{props.student.name}</p>
-          <p className="text-[10px]">{props.student.curso}</p>
+          <p className="font-semibold text-darkBlue">
+            {props.student?.usuario_completo_read?.profile_read?.nome_completo}
+          </p>
+          <p className="text-[10px]">
+            {props.student?.usuario_completo_read?.email}
+          </p>
         </div>
       </div>
 
@@ -66,9 +77,13 @@ export default function ListItem(props: Item) {
         <div>
           <p className="font-semibold">Finalizados</p>
           <p className="text-sm font-bold">
-            {props.student.finalized < 10
-              ? '0' + props.student.finalized
-              : props.student.finalized}
+            {props.student?.usuario_completo_read?.progressos_read
+              ?.cursos_finalizados < 10
+              ? '0' +
+                props.student?.usuario_completo_read?.progressos_read
+                  ?.cursos_finalizados
+              : props.student?.usuario_completo_read?.progressos_read
+                  ?.cursos_finalizados || '00'}
           </p>
         </div>
       </div>
@@ -79,7 +94,15 @@ export default function ListItem(props: Item) {
         </span>
         <div>
           <p className="font-semibold">Presença</p>
-          <p className="text-sm font-bold">{props.student.presence}</p>
+          <p className="text-sm font-bold">
+            {props.student?.usuario_completo_read?.progressos_read
+              ?.aulas_finalizadas_total < 10
+              ? '0' +
+                props.student?.usuario_completo_read?.progressos_read
+                  ?.aulas_finalizadas_total
+              : props.student?.usuario_completo_read?.progressos_read
+                  ?.aulas_finalizadas_total || '00'}
+          </p>
         </div>
       </div>
     </section>

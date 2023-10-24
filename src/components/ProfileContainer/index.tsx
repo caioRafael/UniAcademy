@@ -4,16 +4,17 @@ import { usePathname } from 'next/navigation'
 import Profile from '@/types/Profile'
 import { UserProfileConainer } from './UserProfileConainer'
 import { UserStatus } from './UserStatus'
-import { Settings } from 'lucide-react'
-import { Button } from '../ui/button'
+
 import { UserSocialMedia } from './UserSocialMedia'
+import { UpdateProfileModal } from './UpdateProfileModal'
 
 interface ProfileContainerProps {
   profile: Profile
+  token: string
 }
 
 export function ProfileContainer(props: ProfileContainerProps) {
-  const { profile } = props
+  const { profile, token } = props
   const pathname = usePathname()
   const currentPage = pathname.split('/')[1]
 
@@ -27,9 +28,10 @@ export function ProfileContainer(props: ProfileContainerProps) {
           <div className="w-28 h-1 rounded-sm bg-secondary" />
         </div>
 
-        <Button variant={'ghost'}>
+        {/* <Button variant={'ghost'}>
           <Settings />
-        </Button>
+        </Button> */}
+        <UpdateProfileModal profile={profile} token={token} />
       </header>
       <div className="grid grid-cols-[1fr_1fr_1fr]">
         <UserProfileConainer profile={profile} />

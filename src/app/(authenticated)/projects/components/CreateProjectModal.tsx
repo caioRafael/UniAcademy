@@ -72,7 +72,10 @@ export function CreateProjectModal(props: CreateProjectModalProps) {
           Adicionar projeto
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[50%]">
+      <DialogContent
+        onClick={() => setOpenModal(false)}
+        className="sm:max-w-[50%]"
+      >
         <DialogTitle>Adicionar projeto</DialogTitle>
         <div className="flex flex-col w-full gap-4 pb-10">
           <Progress value={progress} className="h-1" />

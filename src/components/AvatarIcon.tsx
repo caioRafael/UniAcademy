@@ -18,7 +18,7 @@ export function AvatarIcon(props: AvatarIconProps) {
   return (
     <>
       <Avatar className="w-14 h-14 mt-[-10px]">
-        <AvatarImage src={data?.foto} />
+        <AvatarImage src={data?.foto as string} />
         <AvatarFallback>
           {initalsName[0].charAt(0).toUpperCase()}
           {initalsName[1]?.charAt(0).toUpperCase()}

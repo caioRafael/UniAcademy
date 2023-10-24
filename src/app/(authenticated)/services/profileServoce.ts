@@ -33,8 +33,14 @@ export class ProfileService implements ResourceService<Profile, Profile> {
     return response.data as Profile
   }
 
-  async update(): Promise<Profile | null> {
-    throw new Error('Method not implemented.')
+  async update(data: Profile, token: string): Promise<Profile | null> {
+    const response = await this.baseApi.updateUpload(
+      `/api/profiles/${data.id}/`,
+      data,
+      token,
+    )
+
+    return response.data as Profile
   }
 
   async delete(): Promise<void> {

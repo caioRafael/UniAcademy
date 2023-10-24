@@ -88,6 +88,7 @@ export const CourseContextProvider = ({
 
         const aulas = module.aulas as File[]
         aulas.forEach(async (classRoom, index) => {
+          //@ts-ignore
           await createClassRom({
             descricao: 'modulo',
             titulo: classRoom.name,

@@ -89,6 +89,25 @@ export class BaseApi<Q, C> implements IBaseApi<Q, C> {
     })
   }
 
+  updateUpload(
+    url: string,
+    data: Record<string, unknown>,
+    token?: string,
+    onUploadProgress?: ((progressEvent: unknown) => void) | undefined,
+    signal?: AbortSignal | undefined,
+  ): Promise<Response<C>> {
+    const formData = new FormData()
+    this.buildFormData(formData, data)
+    return this.axios.put(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: token ? `Bearer ${token}` : null,
+      },
+      onUploadProgress,
+      signal,
+    })
+  }
+
   download(
     url: string,
     data?: unknown,
