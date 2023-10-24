@@ -10,16 +10,25 @@ export class ClipService implements ResourceService<ClipItem, ClipItem> {
     this.baseApi = baseApi
   }
 
-  async create(): Promise<ClipItem | null> {
-    throw new Error('Method not implemented.')
+  async create(data: ClipItem, token: string): Promise<ClipItem | null> {
+    const response = await this.baseApi.post('/api/clipes/', data, token)
+
+    return response.data as ClipItem
   }
 
   findQuery(): Promise<ClipItem[]> {
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<ClipItem>> {
-    const response = await this.baseApi.getAll('/api/clipes/', token)
+  async findAll(
+    token: string,
+    userId: number,
+    classId: number,
+  ): Promise<ListResponse<ClipItem>> {
+    const response = await this.baseApi.getAll(
+      `/api/clipes/?usuario_criacao=${userId}&aula=${classId}`,
+      token,
+    )
 
     return response.data as ListResponse<ClipItem>
   }
@@ -34,7 +43,7 @@ export class ClipService implements ResourceService<ClipItem, ClipItem> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

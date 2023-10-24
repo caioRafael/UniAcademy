@@ -9,7 +9,6 @@ export default async function Courses() {
   const { token, profile, id } = await getUser()
 
   const userIsTeacher = profile?.tipo_usuario === 'professor'
-
   return (
     <ClassesContextProvider>
       <div className="w-full pt-16 px-9 mb-8">

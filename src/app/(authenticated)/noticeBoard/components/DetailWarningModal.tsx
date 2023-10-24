@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import Project from '@/types/Project'
 import { Warning } from '@/types/Warning'
 import { formatDate } from '@/utils/formatDate'
 import { Paperclip } from 'lucide-react'

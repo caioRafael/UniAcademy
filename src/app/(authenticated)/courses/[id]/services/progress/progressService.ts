@@ -24,7 +24,7 @@ export class ProgressService implements ResourceService<Progress, Progress> {
     throw new Error('Method not implemented.')
   }
 
-  async findOne(id: string, token: string): Promise<Progress | null> {
+  async findOne(): Promise<Progress | null> {
     throw new Error('Method not implemented.')
   }
 
@@ -32,7 +32,7 @@ export class ProgressService implements ResourceService<Progress, Progress> {
     throw new Error('Method not implemented.')
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 

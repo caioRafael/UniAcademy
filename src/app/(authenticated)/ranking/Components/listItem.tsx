@@ -2,6 +2,7 @@
 
 import { CalendarCheck, CheckCircle2 } from 'lucide-react'
 import { Student } from '../page'
+import Image from 'next/image'
 
 type Item = {
   student: Student
@@ -13,24 +14,30 @@ export default function ListItem(props: Item) {
     <section className="w-full h-full px-4 mb-2 flex items-center text-[14px] rounded-sm border-[1px] border-border cursor-pointer hover:bg-accent">
       <div className="w-[10%]">
         {props.index === 0 && (
-          <img
+          <Image
             alt="colocation"
             src="https://i.imgur.com/0GdmlIu.png"
             className="w-10"
+            width={40}
+            height={40}
           />
         )}
         {props.index === 1 && (
-          <img
+          <Image
             alt="colocation"
             src="https://i.imgur.com/Xcu7Ifo.png"
             className="w-10"
+            width={40}
+            height={40}
           />
         )}
         {props.index === 2 && (
-          <img
+          <Image
             alt="colocation"
             src="https://i.imgur.com/JAYHwcC.png"
             className="w-10"
+            width={40}
+            height={40}
           />
         )}
       </div>
@@ -39,9 +46,12 @@ export default function ListItem(props: Item) {
       </p>
 
       <div className="flex items-center w-[40%]">
-        <img
+        <Image
           className="mr-2 w-10 h-10 rounded-full"
           src="https://github.com/shadcn.png"
+          width={40}
+          height={40}
+          alt="Profile"
         />
         <div>
           <p className="font-semibold text-darkBlue">{props.student.name}</p>

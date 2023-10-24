@@ -6,7 +6,7 @@ import {
   courseCategoryQueryService,
   courseQueryService,
 } from '../../create/services'
-import { Course, CourseCategory } from '@/types/Course'
+import { CourseCategory } from '@/types/Course'
 import { CourseList } from '../CourseList'
 import { Category } from '@/types/Category'
 interface GraduationsListProps {
@@ -23,8 +23,7 @@ export default function GraduationsList({
   const { data: dataCategory, isLoading: dataCategoryIsLoading } =
     courseCategoryQueryService.useFindAll(token)
 
-  const { data: dataCourses, isLoading: coursesIsLoading } =
-    courseQueryService.useFindAll(token)
+  const { isLoading: coursesIsLoading } = courseQueryService.useFindAll(token)
 
   const myCoursesQuery = useMemo(() => {
     if (userIsTeacher) {
@@ -41,10 +40,6 @@ export default function GraduationsList({
       setSelectedGraduation(dataCategory?.results?.[0])
     }
   }, [dataCategory?.results])
-
-  const totalPerCategory = dataCourses?.results?.filter(
-    (course: Course) => course.categoria === selectedGraduation?.id,
-  ).length
 
   return (
     <>

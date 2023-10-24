@@ -35,8 +35,8 @@ const TabsContainer = ({ token, username, usernameId }: TabsContainerProps) => {
     },
     {
       id: 3,
-      label: 'Clipar Aula',
-      component: <ClassClipsList token={token} />,
+      label: 'Clipagens',
+      component: <ClassClipsList token={token} usernameId={usernameId} />,
     },
   ]
 
@@ -44,7 +44,7 @@ const TabsContainer = ({ token, username, usernameId }: TabsContainerProps) => {
 
   return (
     <section className="mt-4">
-      <div className="flex justify-between items-center mb-10 w-full gap-16 flex-wrap-reverse">
+      <div className="flex justify-between items-center mb-8 w-full gap-16 flex-wrap-reverse">
         <div className=" flex items-center">
           <span className="text-black text-xxs font-semibold border-l-xxs border-darkRed pl-1 mr-4">
             {selectedOption.label}

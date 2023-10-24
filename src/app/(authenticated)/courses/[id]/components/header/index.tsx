@@ -6,20 +6,19 @@ import { SubscribeModal } from '../subscribeModal'
 import { useMemo } from 'react'
 export interface HeaderProps {
   token: string
-  userIsTeacher: boolean
+  profileType: string
   userId: number
 }
 
-const Header = ({ token, userIsTeacher, userId }: HeaderProps) => {
+const Header = ({ token, profileType, userId }: HeaderProps) => {
   const { selectedCourse, selectedClass } = useClassContext()
 
   const showSubscribeButton = useMemo(() => {
     if (!selectedCourse) {
       return false
     }
-    if (userIsTeacher) {
-      return false
-    }
+    if (profileType === 'visitante' || profileType === 'professor') return false
+
     return !selectedCourse?.usuarios_com_acesso?.includes(userId)
   }, [selectedCourse?.usuarios_com_acesso])
 

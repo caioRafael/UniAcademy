@@ -35,7 +35,7 @@ export function Combobox(props: ComboboxProps) {
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="justify-between border border-border"
+          className="justify-between bg-white border border-border text-xxs"
         >
           {value
             ? options.find((framework) => framework.value === value)?.label
@@ -45,7 +45,7 @@ export function Combobox(props: ComboboxProps) {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder={placeholder} />
+          <CommandInput className="text-xxs" placeholder={placeholder} />
           <CommandEmpty>No framework found.</CommandEmpty>
           <CommandGroup>
             {options.map((framework) => (
@@ -56,6 +56,7 @@ export function Combobox(props: ComboboxProps) {
                   setValue(currentValue === value ? '' : currentValue)
                   setOpen(false)
                 }}
+                className="text-xxs"
               >
                 <Check
                   className={cn(

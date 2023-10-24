@@ -32,7 +32,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       </header>
       <ProfileContainer profile={profile as Profile} />
       <div className="grid h-full w-full grid-cols-[16rem_1fr]">
-        <SideBar profile={profile as Profile} />
+        <SideBar />
         <main className="flex w-full h-full overflow-auto">{children}</main>
       </div>
     </div>

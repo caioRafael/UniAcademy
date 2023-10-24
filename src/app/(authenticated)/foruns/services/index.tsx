@@ -1,6 +1,6 @@
 import { BaseApi } from '@/lib/api/BaseApi'
 import { ResourceQueryService } from '@/lib/api/ResourceQueryService'
-import Forum, { ForumItem } from '@/types/Forum'
+import { ForumItem } from '@/types/Forum'
 import { ForumService } from './forumService'
 import { CreateForumAnswerService } from './createForumAnswerService'
 import CreateForumAnswer from '@/types/CreateForumAnswer'

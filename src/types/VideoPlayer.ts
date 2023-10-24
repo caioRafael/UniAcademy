@@ -13,6 +13,7 @@ export interface ControlProps {
   onRewind: () => void
   onForward: () => void
   onSeek: (value: number[]) => void
+  onSeekClip: (value: number[]) => void
   onVolumeChangeHandler: (value: number[]) => void
   onMute: () => void
   onFullScreen: () => void
@@ -24,4 +25,7 @@ export interface ControlProps {
   volume: number
   showRewind?: boolean
   showForward?: boolean
+  token: string
+  usuario_criacao: number
+  isFullScreen: boolean
 }

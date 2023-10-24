@@ -2,13 +2,14 @@
 
 import ReactPlayer from 'react-player'
 import { Control } from './Control'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { formatTime } from '@/utils/formatTime'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { OnProgressProps } from 'react-player/base'
 import { IVideoState } from '@/types/VideoPlayer'
 import { progressQueryService } from '@/app/(authenticated)/courses/[id]/services/progress'
 import { useClassContext } from '@/app/(authenticated)/courses/[id]/context/ClassesContext'
+import { useVideoPlayerContext } from '@/app/(authenticated)/courses/[id]/context/VideoPlayContext'
 
 export interface VideoPlayerProps {
   url: string
@@ -25,6 +26,7 @@ export function VideoPlayer({
 }: VideoPlayerProps) {
   const { mutateAsync: saveProgress } = progressQueryService.useCreate(token)
   const { selectedClass } = useClassContext()
+  const { clip, createClip, setCreateClip } = useVideoPlayerContext()
 
   const videoPlayerRef = useRef<ReactPlayer>(null)
   const handleFullScreen = useFullScreenHandle()
@@ -68,6 +70,35 @@ export function VideoPlayer({
       })
   }
 
+  const seekToHandler = (progress: number) => {
+    videoPlayerRef?.current?.seekTo(duration * (progress / 100))
+  }
+
+  useEffect(() => {
+    if (clip.isActive && clip.selectedClip) {
+      seekToHandler(clip.selectedClip.tempo_inicial)
+    }
+  }, [clip.selectedClip])
+
+  useEffect(() => {
+    if (!clip.isActive) {
+      return
+    }
+    if (!clip.selectedClip) return
+
+    if (currentProgress > clip.selectedClip.tempo_final) {
+      if (!clip.selectedClip) return
+      setVideoState({ ...videoState, playing: false, played: 0 })
+      seekToHandler(0)
+    }
+  }, [clip, currentProgress])
+
+  useEffect(() => {
+    if (createClip.isStarted) {
+      setVideoState({ ...videoState, playing: false })
+    }
+  }, [createClip])
+
   useEffect(() => {
     saveVideoProgress()
     return () => {
@@ -75,35 +106,27 @@ export function VideoPlayer({
     }
   }, [selectedClass, playing])
 
-  const seekToHandler = () => {
-    videoPlayerRef.current?.seekTo(
-      duration *
-        ((selectedClass?.meu_progresso_read?.progresso as number) / 100),
-    )
-  }
-
   useEffect(() => {
-    seekToHandler()
+    seekToHandler(selectedClass?.meu_progresso_read?.progresso || 0)
   }, [selectedClass?.meu_progresso_read])
 
   useEffect(() => {
     if (isFirstRender) return
-    seekToHandler()
+    seekToHandler(selectedClass?.meu_progresso_read?.progresso || 0)
   }, [isFirstRender])
 
   const playPauseHandler = () => {
+    if (createClip.isStarted) return
     setVideoState({ ...videoState, playing: !videoState.playing })
   }
 
   const rewindHandler = () => {
     if (videoPlayerRef.current)
-      // Rewinds the video player reducing 5
       videoPlayerRef.current.seekTo(videoPlayerRef.current.getCurrentTime() - 5)
   }
 
   const handleFastFoward = () => {
     if (videoPlayerRef.current)
-      // FastFowards the video player by adding 10
       videoPlayerRef.current.seekTo(
         videoPlayerRef.current.getCurrentTime() + 10,
       )
@@ -121,6 +144,14 @@ export function VideoPlayer({
     if (videoPlayerRef.current) {
       setVideoState({ ...videoState, played: value[0] / 100 })
       videoPlayerRef.current.seekTo(value[0] / 100)
+    }
+  }
+  const seekClipHandler = (value: number[]) => {
+    const selectThumb = createClip.initial !== value[0] ? 0 : 1
+    if (videoPlayerRef.current) {
+      setVideoState({ ...videoState, played: value[selectThumb] / 100 })
+      videoPlayerRef.current.seekTo(value[selectThumb] / 100)
+      setCreateClip({ ...createClip, initial: value[0], final: value[1] })
     }
   }
 
@@ -143,7 +174,6 @@ export function VideoPlayer({
   }
 
   const bufferStartHandler = () => {
-    // console.log('Bufering.......')
     setVideoState({ ...videoState, buffer: true })
   }
 
@@ -189,6 +219,7 @@ export function VideoPlayer({
           onForward={handleFastFoward}
           played={played}
           onSeek={seekHandler}
+          onSeekClip={seekClipHandler}
           volume={volume}
           onVolumeChangeHandler={volumeChangeHandler}
           mute={muted}
@@ -196,6 +227,9 @@ export function VideoPlayer({
           duration={formatDuration}
           currentTime={formatCurrentTime}
           onFullScreen={onFullScreenHanlder}
+          isFullScreen={handleFullScreen.active}
+          token={token}
+          usuario_criacao={usernameId}
         />
       </div>
     </FullScreen>

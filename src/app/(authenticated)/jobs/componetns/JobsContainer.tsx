@@ -20,10 +20,11 @@ import { JobCreateModal } from './JobCreateModal'
 interface JobsContainerProps {
   token: string
   userId: number
+  userIsTeacher: boolean
 }
 
 export function JobsContainer(props: JobsContainerProps) {
-  const { token, userId } = props
+  const { token, userId, userIsTeacher } = props
   const [experiencia, setExperiencia] = useState<string>('')
   const [modoTrabalho, setModoTrabalho] = useState<string>('')
   const [horarioTrabalho, setHorarioTrabalho] = useState<string>('')
@@ -38,11 +39,11 @@ export function JobsContainer(props: JobsContainerProps) {
           <Input placeholder="Qual vaga você procura?" />
           <Button>Buscar</Button>
         </div>
-        <JobCreateModal token={token} userId={userId} />
+        {userIsTeacher && <JobCreateModal token={token} userId={userId} />}
       </div>
       <div className="flex gap-3 w-full items-center justify-center">
         <Combobox
-          placeholder="Nivel de experiencia"
+          placeholder="Nível de Experiência"
           options={experienceLevelList}
           value={experiencia}
           setValue={setExperiencia}
@@ -54,7 +55,7 @@ export function JobsContainer(props: JobsContainerProps) {
           setValue={setModoTrabalho}
         />
         <Combobox
-          placeholder="Horario"
+          placeholder="Horário"
           options={HourList}
           value={horarioTrabalho}
           setValue={setHorarioTrabalho}
