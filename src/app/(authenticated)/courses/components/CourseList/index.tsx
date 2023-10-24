@@ -79,7 +79,7 @@ export function CourseList(props: CourseListProps) {
                 (course.capa as string) || 'https://i.ibb.co/jGQ7qMy/curso.png'
               }
               tag="Programação"
-              className="min-w-330 min-h-270"
+              className="w-[330px] h-[270px]"
               onClick={() => redirectToClass(course)}
             />
           ))
