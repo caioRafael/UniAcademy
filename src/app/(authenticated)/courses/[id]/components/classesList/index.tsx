@@ -25,7 +25,7 @@ const ClassesList = ({ token, moduleId }: ClassesListProps) => {
             {moduleClass && moduleClass?.meu_progresso_read?.progresso < 90 ? (
               <Play className="text-white w-4" />
             ) : (
-              <CheckCircle2 className="text-checkGreen" />
+              <CheckCircle2 className="text-green-500" />
             )}
             <span className="text-white text-xxxs font-medium w-48 truncate">
               {moduleClass.titulo}

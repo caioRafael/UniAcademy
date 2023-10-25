@@ -27,7 +27,7 @@ export default function Recommended({ token }: ListaProps) {
               }
             />
           )}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col w-full gap-4">
             {data?.results[1] && (
               <Card
                 title={data?.results[1]?.titulo?.replace('.mp4', '') || ''}

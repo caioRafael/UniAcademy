@@ -15,6 +15,7 @@ import {
   moduleQueryService,
 } from '../services'
 import { useRouter } from 'next/navigation'
+import { promise } from 'zod'
 
 // Defina o formato do estado
 interface CourseContextState {
@@ -79,7 +80,7 @@ export const CourseContextProvider = ({
     try {
       const responseCourse = await createCourse(courseData)
 
-      moduleList.forEach(async (module) => {
+      const newModules = moduleList.map(async (module) => {
         const responseModule = await createModule({
           ...module,
           descricao: 'modulo',
@@ -87,22 +88,24 @@ export const CourseContextProvider = ({
         } as ModuleItem)
 
         const aulas = module.aulas as File[]
-        aulas.forEach(async (classRoom, index) => {
-          //@ts-ignore
-          await createClassRom({
-            descricao: 'modulo',
-            titulo: classRoom.name,
-            ordem: index,
-            modulo: responseModule?.id as number,
-            usuario_atualizacao: userId as number,
-            trancricao: '',
-            video: classRoom as File,
-            tipo_aula: 'video',
-            usuario_criacao: userId as number,
-          })
-        })
+        Promise.all(
+          aulas.map(async (classRoom, index) => {
+            //@ts-ignore
+            await createClassRom({
+              descricao: 'modulo',
+              titulo: classRoom.name,
+              ordem: index,
+              modulo: responseModule?.id as number,
+              usuario_atualizacao: userId as number,
+              trancricao: '',
+              video: classRoom as File,
+              tipo_aula: 'video',
+              usuario_criacao: userId as number,
+            })
+          }),
+        )
       })
-      if (responseCourse && moduleList.length !== 0) router.push('/courses')
+      if (responseCourse && newModules.length !== 0) router.push('/courses')
     } catch (error) {
       console.log(error)
     }
