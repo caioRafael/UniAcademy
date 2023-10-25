@@ -49,7 +49,7 @@ export function ModuleItem(props: ModuleItemProps) {
     <AccordionItem value={String(index)}>
       <AccordionTrigger>
         <Input
-          placeholder="Titulo do modulo"
+          placeholder="Título do módulo"
           onChange={(e) => setTitle(e.currentTarget.value)}
           className="w-5/6"
         />

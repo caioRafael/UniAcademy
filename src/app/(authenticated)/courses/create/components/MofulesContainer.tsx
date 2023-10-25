@@ -48,7 +48,7 @@ export function ModulesContainer() {
         className="border-2 mt-4 w-2/3 h-16 flex text-xs rounded-md aspect-video items-center justify-center cursor-pointer border-dashed gap-2 text-muted-foreground hover:bg-primary/5"
       >
         <Plus />
-        Adicionar modulo
+        Adicionar módulo
       </div>
     </div>
   )

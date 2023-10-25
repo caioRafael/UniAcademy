@@ -26,7 +26,7 @@ export class ClipService implements ResourceService<ClipItem, ClipItem> {
     classId: number,
   ): Promise<ListResponse<ClipItem>> {
     const response = await this.baseApi.getAll(
-      `/api/clipes/?usuario_criacao=${userId}&aula=${classId}`,
+      `/api/clipes/?usuario_criacao=${userId}&aula=${classId || ''}`,
       token,
     )
 

@@ -7,5 +7,6 @@ export interface FinalProject extends Entity {
   data_criacao?: string
   data_conclusao?: string
   usuario_criacao: number
+  nome_usuario_criacao_read?: string
   curso: number
 }

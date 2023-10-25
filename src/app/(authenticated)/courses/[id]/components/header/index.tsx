@@ -25,7 +25,11 @@ const Header = ({ token, profileType, userId }: HeaderProps) => {
   return (
     <div className="flex justify-between items-center mb-4">
       <div className="w-[70%]">
-        <Title title={selectedClass?.titulo?.replace('.mp4', '') || ''} />
+        {selectedClass ? (
+          <Title title={selectedClass?.titulo?.replace('.mp4', '') || ''} />
+        ) : (
+          ''
+        )}
       </div>
       {showSubscribeButton && <SubscribeModal userId={userId} token={token} />}
     </div>

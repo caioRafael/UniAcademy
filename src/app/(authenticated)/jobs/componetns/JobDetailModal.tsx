@@ -53,9 +53,15 @@ export function JobDetailModal(props: JobDetailModalProps) {
           </h1>
           <p>{job.sobre_vaga}</p>
 
-          <Button variant={'outline'} className="w-40 self-center">
-            Candidatar-se
-          </Button>
+          {job.link_vaga && (
+            <a
+              href={job.link_vaga}
+              target="_blank"
+              className="w-40 self-center h-10 rounded-sm text-secondary border border-secondary flex items-center justify-center"
+            >
+              Candidatar-se
+            </a>
+          )}
         </div>
       </DialogContent>
     </Dialog>

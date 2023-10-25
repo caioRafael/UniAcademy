@@ -36,6 +36,7 @@ export function JobCreateModal(props: JobCreateModalProps) {
 
   const [titulo, setTitulo] = useState<string>('')
   const [sobreEmpresa, setSobreEmpresa] = useState<string>('')
+  const [link, setLink] = useState<string>('')
   const [sobreVaga, setSobreVaga] = useState<string>('')
   const [horario, setHorario] = useState<string>('')
   const [funcionarios, setFuncionarios] = useState<number>(0)
@@ -52,6 +53,7 @@ export function JobCreateModal(props: JobCreateModalProps) {
       experiencia,
       modo_de_trabalho: modoDeTrabalho,
       contratante: userId,
+      link_vaga: link,
       candidatos: [],
     } as Job
 
@@ -123,6 +125,14 @@ export function JobCreateModal(props: JobCreateModalProps) {
               value={String(funcionarios)}
               onChange={(e) => setFuncionarios(Number(e.currentTarget.value))}
               type="number"
+            />
+          </div>
+          <div className="w-full">
+            <Label className="font-medium text-xs">Link</Label>
+            <Input
+              placeholder="Titulo da vaga"
+              value={link}
+              onChange={(e) => setLink(e.currentTarget.value)}
             />
           </div>
 

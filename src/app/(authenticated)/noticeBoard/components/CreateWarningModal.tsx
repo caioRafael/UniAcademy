@@ -73,18 +73,18 @@ export function CreateWarningModal(props: CreateProjectModalProps) {
     <Dialog open={openModal} onOpenChange={setOpenModal}>
       <DialogTrigger asChild>
         <Button variant={'outline'} onClick={() => setOpenModal(true)}>
-          Adicionar projeto
+          Cadastrar aviso
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[50%]">
-        <DialogTitle>Adicionar projeto</DialogTitle>
+        <DialogTitle>Cadastro de aviso</DialogTitle>
         <div className="flex flex-col w-full gap-4 pb-10">
           <Progress value={progress} className="h-1" />
 
           <div className="w-full">
-            <Label className="font-medium text-xs">Informe o titulo</Label>
+            <Label className="font-medium text-xs">Informe o título</Label>
             <Input
-              placeholder="Titulo"
+              placeholder="Título"
               value={titulo}
               onChange={(e) => setTitulo(e.currentTarget.value)}
             />
@@ -140,7 +140,7 @@ export function CreateWarningModal(props: CreateProjectModalProps) {
             onClick={handleCreateProject}
             className="w-32 self-end"
           >
-            {isLoading ? <Spin /> : 'Adicionar'}
+            {isLoading ? <Spin /> : 'Cadastrar'}
           </Button>
         </div>
       </DialogContent>

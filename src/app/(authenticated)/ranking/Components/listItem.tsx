@@ -3,6 +3,9 @@
 import { CalendarCheck, CheckCircle2, User } from 'lucide-react'
 import { Student } from './Lista'
 import Image from 'next/image'
+import firstRanking from '@/assets/firstRanking.png'
+import secondRanking from '@/assets/secondRanking.png'
+import thirdRanking from '@/assets/thirdRanking.png'
 
 type Item = {
   student: Student
@@ -18,7 +21,7 @@ export default function ListItem(props: Item) {
             width={40}
             height={40}
             alt="colocation"
-            src="https://i.imgur.com/0GdmlIu.png"
+            src={firstRanking}
             className="w-10"
           />
         )}
@@ -27,7 +30,7 @@ export default function ListItem(props: Item) {
             width={40}
             height={40}
             alt="colocation"
-            src="https://i.imgur.com/Xcu7Ifo.png"
+            src={secondRanking}
             className="w-10"
           />
         )}
@@ -36,7 +39,7 @@ export default function ListItem(props: Item) {
             width={40}
             height={40}
             alt="colocation"
-            src="https://i.imgur.com/JAYHwcC.png"
+            src={thirdRanking}
             className="w-10"
           />
         )}

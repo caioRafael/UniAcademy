@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { Course } from '@/types/Course'
 import { ListResponse } from '@/types/ListResponse'
 import {
+  certificateQueryService,
   classRoomQueryService,
   courseQueryService,
   moduleQueryService,
@@ -20,18 +21,27 @@ import {
 import ClassesList from '../classesList'
 import { Spin } from '@/components/spin'
 import FinalProjectModal from '../finalProjectModal'
+import { useRouter } from 'next/navigation'
+import { finalProjectQueryService } from '../../services'
 
 interface ClassesPlaylistProps {
   token: string
   courseId: number
   usernameId: number
+  profileId: number
+  userIsStudent: boolean
+  userIsTeacher: boolean
 }
 
 const ClassesPlaylist = ({
   token,
   courseId,
   usernameId,
+  profileId,
+  userIsStudent,
+  userIsTeacher,
 }: ClassesPlaylistProps) => {
+  const router = useRouter()
   const { setSelectedClass, selectedCourse, setSelectedCourse } =
     useClassContext()
   const { data: dataClass } = classRoomQueryService.useFindAll(token)
@@ -41,8 +51,15 @@ const ClassesPlaylist = ({
     String(courseId),
     token as string,
   )
-  const [openProjectModal, setOpenProjectModal] = useState<boolean>(false)
 
+  const { mutateAsync: createCertificate } =
+    certificateQueryService.useCreate(token)
+  const [openProjectModal, setOpenProjectModal] = useState<boolean>(false)
+  const { data: dataFinalProject } = finalProjectQueryService.useFindAll(
+    token,
+    usernameId,
+    Number(courseId),
+  )
   useEffect(() => {
     const firstModuleId: number = dataModule?.results[0]?.id as number
     setSelectedClass(
@@ -56,6 +73,17 @@ const ClassesPlaylist = ({
     setSelectedCourse(course as Course)
   }, [course])
 
+  const handleCreateCertificate = async () => {
+    const data = await createCertificate({
+      curso: course?.id as number,
+      codigo: course?.codigo as string,
+      aluno: profileId,
+      usuario_criacao: usernameId,
+      usuario_atualizacao: usernameId,
+    })
+    router.replace(`feedback/${data?.id}`)
+  }
+
   return (
     <aside className="px-3 pt-10 pb-16 bg-primary w-72 min-h-screen">
       <div className=" h-full flex flex-col">
@@ -63,7 +91,7 @@ const ClassesPlaylist = ({
           <div className="px-3">
             <div className="flex items-center gap-3 mb-4 justify-between">
               <Play className="text-darkRed" />
-              <span className="text-background text-xxxxs font-semibold">
+              <span className="text-background text-sm font-semibold truncate">
                 {selectedCourse?.titulo}
               </span>
               <ChevronRight className="text-background" />
@@ -101,19 +129,40 @@ const ClassesPlaylist = ({
             )}
           </div>
         </div>
-        <div className="flex flex-col items-center gap-4">
+        {userIsTeacher && (
           <button
             className="bg-black-2 rounded-md py-4 px-2 w-56 text-white text-xxs font-medium flex items-center justify-center gap-5"
-            disabled={false}
-            onClick={() => setOpenProjectModal(true)}
+            onClick={() => router.push(`/courses/projects/${courseId}`)}
           >
-            <CheckCircle2 className="text-checkGreen" />
-            Projeto Final
+            Projetos Finais
           </button>
-          <button className="bg-primary rounded-md py-4 px-2 w-56 text-darkRed text-xxs border-darkRed border-2">
-            Emitir Certificado
-          </button>
-        </div>
+        )}
+        {userIsStudent && (
+          <div className="flex flex-col items-center gap-4">
+            <button
+              className="bg-black-2 rounded-md py-4 px-2 w-56 text-white text-xxs font-medium flex items-center justify-center gap-5"
+              disabled={Boolean(
+                (dataFinalProject?.results?.length as number) > 0,
+              )}
+              onClick={() => setOpenProjectModal(true)}
+            >
+              {dataFinalProject?.results.length ? (
+                <CheckCircle2 className="text-checkGreen" />
+              ) : (
+                ''
+              )}
+              Projeto Final
+            </button>
+            {course && course?.meu_progresso_read?.curso_finalizado && (
+              <button
+                className="bg-primary rounded-md py-4 px-2 w-56 text-darkRed text-xxs border-darkRed border-2"
+                onClick={handleCreateCertificate}
+              >
+                Emitir Certificado{' '}
+              </button>
+            )}
+          </div>
+        )}
       </div>
       {openProjectModal && (
         <FinalProjectModal

@@ -11,15 +11,12 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useClassContext } from '../../context/ClassesContext'
 import { commentItemQueryService } from '../../services'
-
 export interface CommentsListProps {
   token: string
-  username: string | undefined
   usernameId: number
 }
 
-const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
-  const initalsName = username?.split(' ') as string[]
+const CommentsList = ({ token, usernameId }: CommentsListProps) => {
   const { selectedClass } = useClassContext()
   const [commentFieldValue, setCommentFieldValue] = useState<string>('')
   const [selectedComment, setSelectedComment] = useState<CommentItem | null>(
@@ -68,7 +65,7 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
           texto: commentFieldValue,
           usuario: usernameId,
           aula: selectedClass?.id as number,
-        })
+        } as CommentItem)
       }
     }
     resetComment()
@@ -86,6 +83,17 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
   const resetComment = () => {
     setSelectedComment(null)
     setCommentFieldValue('')
+  }
+
+  const getProfilePicture = (name: string) => {
+    const initalsName = name?.split(' ') as string[]
+
+    return (
+      <AvatarFallback>
+        {initalsName?.[0]?.charAt(0).toUpperCase()}
+        {initalsName?.[1]?.charAt(0).toUpperCase()}
+      </AvatarFallback>
+    )
   }
 
   return (
@@ -115,15 +123,12 @@ const CommentsList = ({ token, username, usernameId }: CommentsListProps) => {
             <div key={comment.id} className="flex items-start mb-5">
               <Avatar>
                 <AvatarImage src="" />
-                <AvatarFallback>
-                  {initalsName[0].charAt(0).toUpperCase()}
-                  {initalsName[1]?.charAt(0).toUpperCase()}
-                </AvatarFallback>
+                {getProfilePicture(comment.nome_usuario)}
               </Avatar>
               <div className="bg-white flex w-full justify-between p-3 rounded border-xxs border-border ml-3">
                 <div>
                   <h3 className="text-black-1 font-medium text-xxs">
-                    {username}
+                    {comment.nome_usuario}
                   </h3>
                   <p className="text-black-1 font-normal text-xxs">
                     {comment.texto}

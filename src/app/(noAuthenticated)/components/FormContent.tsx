@@ -73,13 +73,6 @@ export const FormContent = () => {
           form={form as UseFormReturn}
         />
 
-        <Link
-          className="text-xs inline-block self-end text-secondary hover:text-fucsia transition-all hover:underline"
-          href="/forgotPassword"
-        >
-          Esqueceu sua senha?
-        </Link>
-
         <Button className="w-full mt-4" type="submit">
           {loading ? <Spin /> : 'Continue'}
         </Button>

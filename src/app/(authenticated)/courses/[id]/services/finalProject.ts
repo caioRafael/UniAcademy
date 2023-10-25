@@ -29,8 +29,15 @@ export class FinalProjectService
     throw new Error('Method not implemented.')
   }
 
-  async findAll(token: string): Promise<ListResponse<FinalProject>> {
-    const response = await this.baseApi.getAll('/api/projetos-finais/', token)
+  async findAll(
+    token: string,
+    userId?: number,
+    courseId?: number,
+  ): Promise<ListResponse<FinalProject>> {
+    const response = await this.baseApi.getAll(
+      `/api/projetos-finais/?usuario_criacao=${userId}&curso=${courseId}`,
+      token,
+    )
 
     return response.data as ListResponse<FinalProject>
   }
@@ -44,8 +51,18 @@ export class FinalProjectService
     return response.data as FinalProject
   }
 
-  async update(): Promise<FinalProject | null> {
-    throw new Error('Method not implemented.')
+  async update(
+    data: Partial<FinalProject>,
+    token: string,
+    id: string,
+  ): Promise<FinalProject | null> {
+    const response = await this.baseApi.patch(
+      `/api/projetos-finais/${id}/`,
+      token,
+      data,
+    )
+
+    return response.data as FinalProject
   }
 
   async delete(): Promise<void> {

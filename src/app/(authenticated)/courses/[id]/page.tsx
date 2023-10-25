@@ -3,8 +3,8 @@ import { getUser } from '@/lib/auth'
 import TabsContainer from './components/tabsContainer'
 import Header from './components/header'
 import { ClassesContextProvider } from './context/ClassesContext'
-import ClassVideo from './components/classVideo'
 import { VideoPlayerContextProvider } from './context/VideoPlayContext'
+import ClassVideoContent from './components/classVideoContent'
 
 export interface Option {
   id: number
@@ -21,7 +21,8 @@ interface ClassesProps {
 export default async function Classes(props: ClassesProps) {
   const { params } = props
   const { token, profile } = await getUser()
-
+  const userIsTeacher = profile?.tipo_usuario === 'professor'
+  const userIsStudent = profile?.tipo_usuario === 'aluno'
   return (
     <ClassesContextProvider>
       <VideoPlayerContextProvider>
@@ -32,11 +33,13 @@ export default async function Classes(props: ClassesProps) {
               profileType={profile?.tipo_usuario || ''}
               userId={profile?.usuario || 0}
             />
-            <ClassVideo usernameId={profile?.usuario} token={token} />
+            <ClassVideoContent
+              usernameId={profile?.usuario as number}
+              token={token}
+            />
             <TabsContainer
               courseId={params.id}
               token={token}
-              username={profile?.nome_completo}
               usernameId={profile?.usuario as number}
             />
           </main>
@@ -44,6 +47,9 @@ export default async function Classes(props: ClassesProps) {
             token={token}
             courseId={params.id}
             usernameId={profile?.usuario as number}
+            userIsTeacher={userIsTeacher}
+            profileId={profile?.id as number}
+            userIsStudent={userIsStudent}
           />
         </div>
       </VideoPlayerContextProvider>

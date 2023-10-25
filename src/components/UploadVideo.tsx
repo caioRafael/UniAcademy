@@ -31,7 +31,7 @@ export function UploadVideo(props: UploadVideoProps) {
         className="border-2 w-full h-16 flex text-xs rounded-md aspect-video items-center justify-center cursor-pointer border-dashed gap-2 text-muted-foreground hover:bg-primary/5"
       >
         <Plus />
-        Adicionar conteudo
+        Adicionar conteúdo
       </label>
     </>
   )

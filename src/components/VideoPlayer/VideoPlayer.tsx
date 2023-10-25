@@ -61,6 +61,8 @@ export function VideoPlayer({
   const currentProgress = calcuteProgressPercentage()
 
   const saveVideoProgress = async () => {
+    if (!classId) return
+
     if (currentProgress)
       await saveProgress({
         progresso:

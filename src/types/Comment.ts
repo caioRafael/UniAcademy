@@ -7,4 +7,5 @@ export interface CommentItem extends Entity {
   aula: number
   data?: string
   anexo?: number
+  nome_usuario: string
 }

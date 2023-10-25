@@ -7,6 +7,8 @@ import { ModuleService } from './moduleServices'
 import ClassRoom from '@/types/Classroom'
 import { ClassRoomService } from './classRoomService'
 import { CourseCategoryService } from './courseCategoryService'
+import { CertificateService } from './certificateService'
+import Certificate from '@/types/certificate'
 
 const baseApi = new BaseApi<Course, Course>()
 export const courseService = new CourseService(baseApi)
@@ -37,4 +39,11 @@ export const courseCategoryQueryService = new ResourceQueryService(
   false,
   '',
   'Inscrição feita com sucesso!',
+)
+
+const certificateBaseApi = new BaseApi<Certificate, Certificate>()
+export const certificateService = new CertificateService(certificateBaseApi)
+export const certificateQueryService = new ResourceQueryService(
+  'certificate',
+  certificateService,
 )

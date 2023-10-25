@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+export const BASE_URL = 'https://apiprojectback.up.railway.app/'
+
 export const api = axios.create({
-  baseURL: 'https://apiprojectback.up.railway.app/',
+  baseURL: BASE_URL,
 })

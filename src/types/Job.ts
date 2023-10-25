@@ -32,6 +32,7 @@ export default interface Job extends Entity {
   experiencia: Experiencia | string
   modo_de_trabalho: ModoDeTrabalho | string
   data_de_publicacao?: string
+  link_vaga?: string
   contratante: number
   candidatos: number[]
 }
