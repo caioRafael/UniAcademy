@@ -72,7 +72,7 @@ export function CreateClipModal({
   }
 
   return (
-    <Dialog open={showModal}>
+    <Dialog open={showModal} onOpenChange={setShowModal}>
       <DialogTrigger asChild>
         <Button
           variant={'outline'}
@@ -83,10 +83,7 @@ export function CreateClipModal({
           Continuar
         </Button>
       </DialogTrigger>
-      <DialogContent
-        onClick={() => setShowModal(false)}
-        className="sm:max-w-[50%]"
-      >
+      <DialogContent className="sm:max-w-[50%]">
         <AppForm formObject={formSchema} setForm={setForm}>
           <h1 className="font-semibold text-3xl after:block w-fit after:h-[3px] after:w-[60%] after:bg-[#D20240] after:rounded-sm mb-2">
             Clipar aula

@@ -67,11 +67,8 @@ const FinalProjectModal = ({
   }
 
   return (
-    <Dialog open={openProjectModal}>
-      <DialogContent
-        onClick={() => setOpenProjectModal(false)}
-        className="sm:max-w-[757px] px-8 py-8"
-      >
+    <Dialog open={openProjectModal} onOpenChange={setOpenProjectModal}>
+      <DialogContent className="sm:max-w-[757px] px-8 py-8">
         <DialogHeader className="mb-3">
           <Title
             title="Projeto final do curso"

@@ -44,7 +44,7 @@ export function SubscribeModal({ token, userId }: SubscribeModalProps) {
   }
 
   return (
-    <Dialog open={showModal}>
+    <Dialog open={showModal} onOpenChange={setShowModal}>
       <DialogTrigger asChild>
         {showButton && (
           <Button onClick={() => setShowModal(true)} disabled={loading}>
@@ -52,10 +52,7 @@ export function SubscribeModal({ token, userId }: SubscribeModalProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent
-        onClick={() => setShowModal(false)}
-        className="sm:max-w-[50%] gap-0"
-      >
+      <DialogContent className="sm:max-w-[50%] gap-0">
         <h1 className="font-semibold text-3xl after:block w-fit after:h-[3px] after:w-[60%] after:bg-[#D20240] after:rounded-sm mb-4">
           Confirmação de inscrição
         </h1>
